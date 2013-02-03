@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>实例类方法的语法是什么？</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="../static/css/render.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>实例类方法的语法是什么？<h1>
+<hr />
+<p><strong><em>本文仅供学习和交流使用，如果您发现我已经侵犯到原作者的版权，请邮件我ttchgm@gmail.com。以便我及时删除和处理。如果翻译有错误或者交流可以随时mail我。或者在sina微博 @天天吃好，私信与我。 本文拒绝任何形式转载。</em></strong></p>
+<hr />
+<h1>What is the syntax for instance method references?</h1>
+<h1>实例的类方法引用的语法是什么？</h1>
+<p>The syntax for referring to static methods has been described. There are two ways of referring to instance methods. One is strictly analogous to the static case, replacing the form ReferenceType::Identifier with ObjectReference::Identifier. For example, the forEach method could be used to pass each element from a collection into an instance function for processing:</p>
+<p>委托静态类方法的语法已经描述过。有两种方式委托给实例的类方法。一种是严格的类似于静态场景，从ReferenceType::Identifier替换成ObjectReference::Identifier。举个例子，forEach类方法可以被使用一个实例的类函数处理集合中的每个元素：</p>
+<pre><code>pointList.forEach(System.out::print);
+</code></pre>
+<p>This is not the most useful variant of instance method references, however; the argument to forEach (or any other method accepting a function in this way) cannot refer to the element that it is processing. Rather, supposing that the elements of pointList belonged to a class TransPoint having a method</p>
+<p>在大多数实例的类方法引用的变量并不能这样用；无论你怎么样做，forEach（或者任何其他的类方法在此方式里支持一个函数）的参数都不能委托元素给他们处理。当然，假设pointList的元素属于类TransPoint，且类TransPoint类中的一个类方法。</p>
+<pre><code>void transpose () { int t = x; x = y; y = t; };
+</code></pre>
+<p>we often want to write something of this form:</p>
+<p>我们经常想写成这样的形式：</p>
+<pre><code>pointList.forEach(/*transpose x and y of this element*/);
+
+pointList.forEach(/*交换这个元素的x和y*/);
+</code></pre>
+<p>The second syntactic variant of instance method references supports this usage. The form
+第二,实例的类方法变量引用支持这种用法，如下形式</p>
+<pre><code>TransPoint::transpose
+</code></pre>
+<p>—where a reference type rather than an object reference is used in conjunction with an instance method name—is translated by the compiler into a lambda expression like this:</p>
+<p>这里是一个引用类型而不是一个对象引用并连接这个实例的类方法名字，他们被编译器转换成一个lambda表达式，像这样：</p>
+<pre><code>(MyPoint pt) -&gt; { pt.transpose(); }
+</code></pre>
+<p>—that is, a lambda expression is synthesized with a single parameter that is then used as the receiver for the call of the instance method. So the syntax
+换言之，被合成了接收单一一个参数的lambda表达式并调用传入参数实例的类方法。语法如下：</p>
+<pre><code>pointList.forEach(TransPoint::transpose);
+</code></pre>
+<p>achieves the result we wanted. The same transformation can be applied to instance methods with any number of parameters; in each case, an extra parameter, representing the receiver, is inserted before the invocation parameters.</p>
+<p>完成了我们想要的。相同的转换能让一个实例类方法被应用到于任何数量的参数；在Each场景里，分解一个extra参数，接收的表现为，被是被插入之前的invocation parameters（调用参数）。</p>
+<blockquote>
+<p>译者注：</p>
+</blockquote>
+<p>之前写过一篇文章 ：<a href="http://www.ituring.com.cn/article/27578">java趣味短码-for的逻辑操作对比</a> 中的first写法，在java1.8将被编译器化。</p>
+
+<a href="../index.html">回到首页</a>
+</body>
+</html>
+
+

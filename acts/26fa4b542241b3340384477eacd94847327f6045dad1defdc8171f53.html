@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>lambda表达式的类型是什么</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="../static/css/render.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>lambda表达式的类型是什么<h1>
+<p><strong><em>本文仅供学习和交流使用，如果您发现我已经侵犯到原作者的版权，请邮件我ttchgm@gmail.com。以便我及时删除和处理。如果翻译有错误或者交流可以随时mail我。或者在sina微博 @天天吃好，私信与我。 本文拒绝任何形式转载。</em></strong></p>
+<h1>lambda表达式的类型是什么？</h1>
+<p>一个lambda表达式是一个功能性接口的实例。但是一个lambda表达式自身并不包含关于哪一个功能性接口是他的实现的信息；这些信息的推断来自上下文的使用处，举个例子，表达式</p>
+<pre><code>x -&gt; 2 * x
+</code></pre>
+<p>可以是如下功能性接口的实例</p>
+<pre><code>interface IntOperation { int operate(int i); }
+</code></pre>
+<p>这样写也合法</p>
+<pre><code>IntOperation io = x -&gt; x * 2;
+</code></pre>
+<p>IntOperation右边的赋值预料到类型为表达式。调用的目标类型为lambda表达式。一个清晰的lambda表达式可能是不同的功能性接口的兼容类型，所以他遵照同样的lambda表达式拥有不同的目标类型在不同的上下文中，举个例子，指定一个接口</p>
+<pre><code>interface DoubleOperation { double operate(double i); }
+</code></pre>
+<p>这样写也合法</p>
+<pre><code>DoubleOperation fo = x -&gt; x * 2;
+</code></pre>
+<p>lambda表达式的目标类型必须是一个功能性接口，并且能被目标类型兼容，lambda表达式必须和接口的函数描述一样的参数类型，他的返回类型也必须和函数描述兼容，并且他能抛出的异常也仅限于在函数描述范围中</p>
+
+<a href="../index.html">回到首页</a>
+</body>
+</html>
+
+

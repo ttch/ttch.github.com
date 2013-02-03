@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>lambda表达式能再哪使用</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="../static/css/render.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>lambda表达式能再哪使用<h1>
+<p><strong><em>本文仅供学习和交流使用，如果您发现我已经侵犯到原作者的版权，请邮件我ttchgm@gmail.com。以便我及时删除和处理。如果翻译有错误或者交流可以随时mail我。或者在sina微博 @天天吃好，私信与我。 本文拒绝任何形式转载。</em></strong></p>
+<h1>Where can lambda expressions be used?</h1>
+<h1>lambda表达式能在哪里使用?</h1>
+<p>Lambda expressions can be written in any context that has a target type. The contexts that have target types are:</p>
+<p>lambda表达式能被写在任何有目标类型的上下文中。哪些上下文可以有目标类型：</p>
+<ul>
+<li>
+<p>Variable declarations and assignments and array initializers, for which the target type is the type (or the array type) being assigned to;</p>
+</li>
+<li>
+<p>变量声明和赋值和数组初始化，针对这种目标类型赋值为一个类型（或者数组类型）；</p>
+</li>
+<li>
+<p>Return statements, for which the target type is the return type of the method;</p>
+</li>
+<li>
+<p>返回段，针对这种目标类型，是函数的返回类型。</p>
+</li>
+<li>
+<p>Method or constructor arguments, for which the target type is the type of the appropriate parameter. If the method or constructor is overloaded, the usual mechanisms of overload resolution are used before the lambda expression is matched to the target type. (After overload resolution, there may still be more than one matching method or constructor signature accepting different functional interfaces with identical functional descriptors. In this case, the lambda expression must be cast to the type of one of these functional interfaces);</p>
+</li>
+<li>
+<p>类方法或者构造类方法的参数，针对这些目标类型是对应的参数类型。如果类方法或者构造类方法被重载，通常重载解析机制是使用在lambda表达式匹配目标对象之前。(在重载解析之前，他们可以仍跟不止一个类方法签名或者构造类方法签名，接受不同的函数式接口但相同的函数式描述符。在这个例子中，lambda表达式必须转换一个对应签名的函数式接口的类型。）；</p>
+</li>
+<li>
+<p>Lambda expression bodies, for which the target type is the type expected for the body, which is derived in turn from the outer target type. Consider</p>
+</li>
+<li>
+<p>lambda表达式主体，目标类型是根据预期的主体类型，且预期的主体类型在目标类型之外的衍生体。认为</p>
+<p>Callable<Runnable> c = () -&gt; () -&gt; { System.out.println("hi"); };</p>
+</li>
+</ul>
+<p>The outer target type here is Callable<Runnable>, which has the function descriptor
+外层目标类型在这里是Callable<Runnable>,他的函数描述是</p>
+<pre><code> Runnable call() throws Exception;
+</code></pre>
+<p>so the target type of the lambda body is the function descriptor of Runnable, namely the run method. This takes no arguments and returns no values, so matches the inner lambda above;</p>
+<p>所以lambda主体的目标类型是Runnable的函数描述，也就是运行类方法。这里没有接受任何参数并且没有返回任何返回值，所以匹配如上内部lambda；</p>
+<p>Tertiary conditional expressions (?:), for which the target type for both arms is provided by the context. For example:</p>
+<p>三段条件表达式(?:)，目标类型,根据后两个表达式的上下文。如下例子：</p>
+<pre><code> Callable&lt;Integer&gt; c = flag ? (() -&gt; 23) : (() -&gt; 42);
+</code></pre>
+<p>Cast expressions, which provide the target type explicitly. For example:</p>
+<p>转换表达式明确的提供是哪一个目标类型。如下例子：</p>
+<pre><code>Object o = () -&gt; { System.out.println("hi"); };
+// Illegal: could be Runnable or Callable
+// 非法:不能是Runnable或者Callable
+Object o = (Runnable) () -&gt; { System.out.println("hi"); };
+// Legal because disambiguated
+//合法原因是消除歧义
+</code></pre>
+
+<a href="../index.html">回到首页</a>
+</body>
+</html>
+
+
