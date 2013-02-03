@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>什么是Lambda表达式</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="../static/css/render.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>什么是Lambda表达式<h1>
+<p>什么是Lambda表达式？</p>
+<p><strong><em>本文仅供学习和交流使用，如果您发现我已经侵犯到原作者的版权，请邮件我ttchgm@gmail.com。以便我及时删除和处理。如果翻译有错误或者交流可以随时mail我。或者在sina微博 @天天吃好，私信与我。 本文拒绝任何形式转载。</em></strong></p>
+<p>在一般数学计算中，一个<code>lambda</code>表达式就是一个函数，它的定义是：为部分或者所有输入值指定一个输出值。<code>Lambda</code>表达式在<code>java</code>中是以函数语言的概念引入。在<code>java</code>中术语<code>Lambdas</code>可以理解为一种省略掉修改器，返回类型和参数类型的更紧凑，更好的匿名方法。</p>
+<blockquote>
+<p><strong><em>语法</em></strong>，
+lambda的基本语法：</p>
+</blockquote>
+<pre><code>(parameters) -&gt; expression
+或者
+(parameters) -&gt; { statements; }
+</code></pre>
+<p><strong><em>例子</em></strong></p>
+<ol>
+<li>
+<p><code>(int x, int y) -&gt; x + y</code>  取两个整型数并返回他们的和</p>
+</li>
+<li>
+<p><code>(x, y) -&gt; x - y</code>    取两个数字并返回他们的差</p>
+</li>
+</ol>
+<p>3.<code>() -&gt; 42</code>  不取任何值直接返回42</p>
+<p>4.<code>(String s) -&gt; System.out.println(s)</code>  取一个字符串，在控制台中打印它的值，并什么也不返回。</p>
+<p>5.<code>x -&gt; 2 * x</code>  取一个数字并返回它的倍数。</p>
+<p>6.<code>c -&gt; { int s = c.size(); c.clear(); return s; }</code>  取一个集合，清空它，并返回清空前的大小。</p>
+<p><strong><em>语法注记</em></strong></p>
+<ul>
+<li>参数类型可以明确的声明(ex. 1,4) 或者隐含的推断(ex. 2,5,6)。声明和推断的类型参数可以不混进一个单独的lambda表达式。</li>
+<li><code>body</code>可以是一个<code>Block</code>，<code>Block Body</code>能返回一个值（value-compatible ，ex.6）或者什么都不返回(void-compatible）。这里的规则为使用或省略掉return关键字的块体等同于一个普通函数体。</li>
+<li>如果<code>body</code>（译者注：体为一个{ } )是一个表达式，他可以返回一个值(ex.1,2,3,5)或者什么都不返回(ex.4)</li>
+<li>一个推断类型可以省略掉圆括号。(ex . 5,6)</li>
+<li>例子6注释的意思是lambda能够操作到一个集合，同样的，他的出现也依赖于上下文的给定参数，如果给定参数拥有size和clear方法，他也能操作，并返回其类型的值。</li>
+</ul>
+
+<a href="../index.html">回到首页</a>
+</body>
+</html>
+
+

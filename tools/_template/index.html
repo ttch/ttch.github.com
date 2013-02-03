@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>{{title}}</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="./static/css/render.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>{{title}}</h1>
+{% for item in docs_title %}
+	<h2>{{item}}</h2>
+{% endfor %}
+
+
+<ul>
+{% for item in docs_ns %}
+	<li><a href="./_posts/{{item.hashID}}.html">{{item.name}}</a></li>
+{% endfor %}
+</ul>
+
+</body>
+</html>
+
+
