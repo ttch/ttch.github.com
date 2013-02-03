@@ -86,7 +86,7 @@ if __name__ == "__main__":
 						"c" : c,
 						"title" : a.name
 				}	\
-				).encode("utf-8"),"..\\_posts\\"+a.hashID+".html" )
+				).encode("utf-8"),"..\\article\\"+a.hashID+".html" )
 	"""	
 	code = 'print "hello World"'
 	print highlight( code,PythonLexer(), HtmlFormatter() )
