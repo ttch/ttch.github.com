@@ -80,7 +80,7 @@ if __name__ == "__main__":
 	
 	md = markdown.Markdown()
 	for a in update_list:
-		c = md.convert( getFileC(a.fullpath).decode("utf-8") )
+		c = markdown.markdown( getFileC(a.fullpath).decode("utf-8"),['codehilite(force_linenos=True,guess_lang=False)'])
 		writeFileC (	reader(getFileC(u".\\_template\_post.html").decode("utf-8"),\
 				{
 						"c" : c,

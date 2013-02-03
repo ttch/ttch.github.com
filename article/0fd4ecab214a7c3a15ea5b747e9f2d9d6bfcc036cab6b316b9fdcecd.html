@@ -3,7 +3,8 @@
 <head>
 <title>lambda表达式能再哪使用</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link href="../static/css/render.css" rel="stylesheet" type="text/css" />
+<link href="/static/css/render.css" rel="stylesheet" type="text/css" />
+<link href="/static/css/hi.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <h1>lambda表达式能再哪使用<h1>
@@ -41,23 +42,33 @@
 </ul>
 <p>The outer target type here is Callable<Runnable>, which has the function descriptor
 外层目标类型在这里是Callable<Runnable>,他的函数描述是</p>
-<pre><code> Runnable call() throws Exception;
-</code></pre>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre> Runnable call() throws Exception;
+</pre></div>
+</td></tr></table>
+
 <p>so the target type of the lambda body is the function descriptor of Runnable, namely the run method. This takes no arguments and returns no values, so matches the inner lambda above;</p>
 <p>所以lambda主体的目标类型是Runnable的函数描述，也就是运行类方法。这里没有接受任何参数并且没有返回任何返回值，所以匹配如上内部lambda；</p>
 <p>Tertiary conditional expressions (?:), for which the target type for both arms is provided by the context. For example:</p>
 <p>三段条件表达式(?:)，目标类型,根据后两个表达式的上下文。如下例子：</p>
-<pre><code> Callable&lt;Integer&gt; c = flag ? (() -&gt; 23) : (() -&gt; 42);
-</code></pre>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre> Callable&lt;Integer&gt; c = flag ? (() -&gt; 23) : (() -&gt; 42);
+</pre></div>
+</td></tr></table>
+
 <p>Cast expressions, which provide the target type explicitly. For example:</p>
 <p>转换表达式明确的提供是哪一个目标类型。如下例子：</p>
-<pre><code>Object o = () -&gt; { System.out.println("hi"); };
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="codehilite"><pre>Object o = () -&gt; { System.out.println(&quot;hi&quot;); };
 // Illegal: could be Runnable or Callable
 // 非法:不能是Runnable或者Callable
-Object o = (Runnable) () -&gt; { System.out.println("hi"); };
+Object o = (Runnable) () -&gt; { System.out.println(&quot;hi&quot;); };
 // Legal because disambiguated
 //合法原因是消除歧义
-</code></pre>
+</pre></div>
+</td></tr></table>
 
 <a href="../index.html">回到首页</a>
 </body>

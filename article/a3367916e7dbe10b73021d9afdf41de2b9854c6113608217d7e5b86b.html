@@ -3,7 +3,8 @@
 <head>
 <title>什么是功能性的接口</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link href="../static/css/render.css" rel="stylesheet" type="text/css" />
+<link href="/static/css/render.css" rel="stylesheet" type="text/css" />
+<link href="/static/css/hi.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <h1>什么是功能性的接口<h1>
@@ -14,11 +15,16 @@
 <p>更精确的，一个<code>函数式接口</code>是恰好被定义成一些接口中的<code>抽象类方法</code> 。（这个限制是必须的，因为一个接口会有继承自Object的<code>非抽象类方法</code>，并且也可以有<code>非抽象默认类方法</code>。）这就是为什么函数式接口被叫做<code>单例抽象类</code>(<code>SAM</code>:<code>Single Abstract Method</code> )接口`，这个术语比较常见。</p>
 <p><strong><em>例子</em></strong></p>
 <p>下面是来自接口来自多个平台库中是函数式接口的定义：</p>
-<pre><code>public interface Runnable { void run(); } 
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="codehilite"><pre>public interface Runnable { void run(); } 
 public interface Callable&lt;V&gt; { V call() throws Exception; } 
 public interface ActionListener { void actionPerformed(ActionEvent e); } 
 public interface Comparator&lt;T&gt; { int compare(T o1, T o2); boolean equals(Object obj); }
-</code></pre>
+</pre></div>
+</td></tr></table>
+
 <p><strong><em>语法注记</em></strong></p>
 <ul>
 <li>接口Comparator是功能性的，虽然它显式声明了两个类方法，因为只有一个是抽象的；equals是一个明确声明为继承自Object的具体函数，除了这里的声明，也将会隐式声明。</li>
@@ -29,11 +35,15 @@ public interface Comparator&lt;T&gt; { int compare(T o1, T o2); boolean equals(O
 </li>
 </ul>
 <p>是说的<code>覆盖等价</code>。如果一个接口包含覆盖等价的类方法的多个父接口，这个功能的描述为这个接口定义像一个能覆盖所有被继承的抽象类方法的一个类方法。在这个例子中，如果</p>
-<pre><code>interface Foo extends Foo1, Foo2 {}
-</code></pre>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre>interface Foo extends Foo1, Foo2 {}
+</pre></div>
+</td></tr></table>
+
 <p>那么foo的功能描述是</p>
-<pre><code>void bar(List arg);
-</code></pre>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre>void bar(List arg);
+</pre></div>
+</td></tr></table>
+
 <p>事实上，任何函数式接口都有这样的函数描述，甚至在更多基本和简单例子中仅是单例抽象类方法接口。</p>
 
 <a href="../index.html">回到首页</a>

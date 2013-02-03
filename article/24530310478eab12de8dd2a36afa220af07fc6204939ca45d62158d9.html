@@ -3,7 +3,8 @@
 <head>
 <title>为什么Java要增加lambda表达式</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link href="../static/css/render.css" rel="stylesheet" type="text/css" />
+<link href="/static/css/render.css" rel="stylesheet" type="text/css" />
+<link href="/static/css/hi.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <h1>为什么Java要增加lambda表达式<h1>
@@ -12,18 +13,27 @@
 <p>在<code>Java 8</code>中，目的是替代集合提供的函数，获取函数并使用他们以各种不同的方法处理元素（我们将使用非常简单的函数<code>forEach</code>为例子，通过它获取一个函数并适用于任何元素）优势是转变集合在内部迭代并组织那些元素，将来自<code>客户端的并行代码</code>转移到<code>库代码</code>中。</p>
 <p>可是 ，为了让客户端代码在这里取得优势，需要一个简单方法给集合函数提供一个函数。当前标准的方式是建立一个<code>匿名类</code>实现对应的接口。但定义<code>内部匿名类</code>的语法太笨拙了</p>
 <p>举个例子，在<code>forEach</code>函数集合上将获取Block接口的一个实例并调用它的apply函数为任何元素。</p>
-<pre><code>interface Block&lt;T&gt; { void apply(T t); }
-</code></pre>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre>interface Block&lt;T&gt; { void apply(T t); }
+</pre></div>
+</td></tr></table>
+
 <p>假设我们想使用<code>forEach</code>在<code>List</code>中的<code>Point</code>元素(<code>Java.awt.Point</code>)上调换x和y的坐标。使用内部匿名类实现Block我们通过调换函数，像这样：</p>
-<pre><code>pointList.forEach(new Block() { 
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="codehilite"><pre>pointList.forEach(new Block() { 
     public void apply(Point p) { 
         p.move(p.y, p.x);
     } 
 });
-</code></pre>
+</pre></div>
+</td></tr></table>
+
 <p>可是，使用Lambda，同样的效果可以用更简介的形式来写：</p>
-<pre><code>pointList.forEach(p -&gt; p.move(p.y, p.x));
-</code></pre>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre>pointList.forEach(p -&gt; p.move(p.y, p.x));
+</pre></div>
+</td></tr></table>
 
 <a href="../index.html">回到首页</a>
 </body>

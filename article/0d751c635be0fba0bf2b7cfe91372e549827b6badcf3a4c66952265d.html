@@ -3,23 +3,32 @@
 <head>
 <title>构造器引用是什么？</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link href="../static/css/render.css" rel="stylesheet" type="text/css" />
+<link href="/static/css/render.css" rel="stylesheet" type="text/css" />
+<link href="/static/css/hi.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <h1>构造器引用是什么？<h1>
 <p>What are constructor references?
 In the same way that method references are handles to existing methods, constructor reference are handles to existing constructors. Constructor references are created using syntax similar to that for method references, but with the method name replaced with the keyword new. For example:</p>
-<pre><code>ArrayList::new
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="codehilite"><pre>ArrayList::new
 File::new
-</code></pre>
+</pre></div>
+</td></tr></table>
+
 <p>If the constructor is generic, type arguments can be explicitly declared before new:</p>
-<pre><code>interface Factory&lt;T&gt; { T make(); }
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="codehilite"><pre>interface Factory&lt;T&gt; { T make(); }
 Factory&lt;ArrayList&lt;String&gt;&gt; f1 = ArrayList::&lt;String&gt;new;
-</code></pre>
+</pre></div>
+</td></tr></table>
+
 <p>As with method references, the choice between overloaded constructors is made using the target type of the context. For example, the second line of the following code maps the Integer(String) constructor on to each element of strList (and then adds them all into a new collection using into):</p>
-<pre><code>List&lt;String&gt; strList = Arrays.asList("1","2","3");
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="codehilite"><pre>List&lt;String&gt; strList = Arrays.asList(&quot;1&quot;,&quot;2&quot;,&quot;3&quot;);
 ArrayList&lt;Integer&gt; intList = strList.map(Integer::new).into(new ArrayList&lt;Integer&gt;());
-</code></pre>
+</pre></div>
+</td></tr></table>
 
 <a href="../index.html">回到首页</a>
 </body>

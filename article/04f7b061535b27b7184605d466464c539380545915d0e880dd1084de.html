@@ -3,7 +3,8 @@
 <head>
 <title>实例类方法的语法是什么？</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link href="../static/css/render.css" rel="stylesheet" type="text/css" />
+<link href="/static/css/render.css" rel="stylesheet" type="text/css" />
+<link href="/static/css/hi.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <h1>实例类方法的语法是什么？<h1>
@@ -14,30 +15,44 @@
 <h1>实例的类方法引用的语法是什么？</h1>
 <p>The syntax for referring to static methods has been described. There are two ways of referring to instance methods. One is strictly analogous to the static case, replacing the form ReferenceType::Identifier with ObjectReference::Identifier. For example, the forEach method could be used to pass each element from a collection into an instance function for processing:</p>
 <p>委托静态类方法的语法已经描述过。有两种方式委托给实例的类方法。一种是严格的类似于静态场景，从ReferenceType::Identifier替换成ObjectReference::Identifier。举个例子，forEach类方法可以被使用一个实例的类函数处理集合中的每个元素：</p>
-<pre><code>pointList.forEach(System.out::print);
-</code></pre>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre>pointList.forEach(System.out::print);
+</pre></div>
+</td></tr></table>
+
 <p>This is not the most useful variant of instance method references, however; the argument to forEach (or any other method accepting a function in this way) cannot refer to the element that it is processing. Rather, supposing that the elements of pointList belonged to a class TransPoint having a method</p>
 <p>在大多数实例的类方法引用的变量并不能这样用；无论你怎么样做，forEach（或者任何其他的类方法在此方式里支持一个函数）的参数都不能委托元素给他们处理。当然，假设pointList的元素属于类TransPoint，且类TransPoint类中的一个类方法。</p>
-<pre><code>void transpose () { int t = x; x = y; y = t; };
-</code></pre>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre>void transpose () { int t = x; x = y; y = t; };
+</pre></div>
+</td></tr></table>
+
 <p>we often want to write something of this form:</p>
 <p>我们经常想写成这样的形式：</p>
-<pre><code>pointList.forEach(/*transpose x and y of this element*/);
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="codehilite"><pre>pointList.forEach(/*transpose x and y of this element*/);
 
 pointList.forEach(/*交换这个元素的x和y*/);
-</code></pre>
+</pre></div>
+</td></tr></table>
+
 <p>The second syntactic variant of instance method references supports this usage. The form
 第二,实例的类方法变量引用支持这种用法，如下形式</p>
-<pre><code>TransPoint::transpose
-</code></pre>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre>TransPoint::transpose
+</pre></div>
+</td></tr></table>
+
 <p>—where a reference type rather than an object reference is used in conjunction with an instance method name—is translated by the compiler into a lambda expression like this:</p>
 <p>这里是一个引用类型而不是一个对象引用并连接这个实例的类方法名字，他们被编译器转换成一个lambda表达式，像这样：</p>
-<pre><code>(MyPoint pt) -&gt; { pt.transpose(); }
-</code></pre>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre>(MyPoint pt) -&gt; { pt.transpose(); }
+</pre></div>
+</td></tr></table>
+
 <p>—that is, a lambda expression is synthesized with a single parameter that is then used as the receiver for the call of the instance method. So the syntax
 换言之，被合成了接收单一一个参数的lambda表达式并调用传入参数实例的类方法。语法如下：</p>
-<pre><code>pointList.forEach(TransPoint::transpose);
-</code></pre>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre>pointList.forEach(TransPoint::transpose);
+</pre></div>
+</td></tr></table>
+
 <p>achieves the result we wanted. The same transformation can be applied to instance methods with any number of parameters; in each case, an extra parameter, representing the receiver, is inserted before the invocation parameters.</p>
 <p>完成了我们想要的。相同的转换能让一个实例类方法被应用到于任何数量的参数；在Each场景里，分解一个extra参数，接收的表现为，被是被插入之前的invocation parameters（调用参数）。</p>
 <blockquote>

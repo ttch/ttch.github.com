@@ -3,7 +3,8 @@
 <head>
 <title>lambda表达式的作用域规则是什么？</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link href="../static/css/render.css" rel="stylesheet" type="text/css" />
+<link href="/static/css/render.css" rel="stylesheet" type="text/css" />
+<link href="/static/css/hi.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <h1>lambda表达式的作用域规则是什么？<h1>
@@ -14,13 +15,18 @@
 <h1>lambda表达式的作用域规则是什么？</h1>
 <p>Lambda expressions do not introduce any new naming environment. Names in the body of a lambda are interpreted exactly as in the enclosing environment, except for the addition of new names for the lambda expression’s formal parameters. The keywords this and super also have the same meaning as immediately outside the lambda expression—that is, they refer to the enclosing class. Formal parameters follow the same rules as method parameters for shadowing class and instance variables. For example, the declaration of Bar:</p>
 <p>lambda表达式并不引入任何新命名环境。名字在一个lambda块内可以被理解为像在封闭的环境中，除了增加新的名字在lambda表达式的正式参数里。关键字<code>this</code>和<code>super</code>也有同样的意思像lambda表达式外边，他们参考自封闭类。正式参数遵循像遮蔽类中类方法参数和实例变量这样的规则。举个例子，bar的声明:</p>
-<pre><code>class Bar { int i; Foo foo = i -&gt; i * 2; };
-</code></pre>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre>class Bar { int i; Foo foo = i -&gt; i * 2; };
+</pre></div>
+</td></tr></table>
+
 <p>is legal because the lambda parameter i shadows the instance variable, whereas for local variables the usual rule of assignment before use applies, so that the method declaration
 合法的原因是因为lambda参数i遮蔽了实例变量（int i)，然而本地变量赋值之前的规则通常是使用申请，所以类方法声明</p>
-<pre><code>void bar() { int i; Foo foo = i -&gt; i * 2; };    // Illegal: variable i is already defined
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="codehilite"><pre>void bar() { int i; Foo foo = i -&gt; i * 2; };    // Illegal: variable i is already defined
 错误，变量i已经定义
-</code></pre>
+</pre></div>
+</td></tr></table>
+
 <p>does not compile.</p>
 <p>没有成功编译。</p>
 
