@@ -3,7 +3,7 @@
 <head>
 <title>{{title}}</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link href="./static/css/render.css" rel="stylesheet" type="text/css" />
+<link href="../static/css/render.css" rel="stylesheet" type="text/css" />
 <style>
 header {
     padding:5px 10px;
@@ -23,7 +23,8 @@ nav {
 </header>
 	<nav>
 	<p>
-		{% for item in topics %} <a href = "./article/{{topics[item].hashID}}/html"> {{item}} </a> &nbsp;&nbsp;&nbsp; {% endfor %}
+		<a href = "../">主页</a>  &nbsp;&nbsp;&nbsp;
+		{% for item in topics %} <a href = "../topics/{{topics[item].hashID}}.html"> {{item}} </a> &nbsp;&nbsp;&nbsp; {% endfor %}
 	</p>
 	</nav>
 
@@ -31,7 +32,7 @@ nav {
 
 <ul>
 {% for item in docs_ns %}
-	<li><a href="./article/{{item.hashID}}.html">{{item.name}}</a>   更新日期:{{item.date}}</li>
+	<li><a href="../article/{{item.hashID}}.html">{{item.name}}</a>   更新日期:{{item.date}}</li>
 {% endfor %}
 </ul>
 </div>

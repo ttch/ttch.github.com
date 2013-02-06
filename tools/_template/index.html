@@ -23,7 +23,8 @@ nav {
 </header>
 	<nav>
 	<p>
-		{% for item in topics %} <a href = "./article/{{topics[item].hashID}}/html"> {{item}} </a> &nbsp;&nbsp;&nbsp; {% endfor %}
+		
+		{% for item in topics %} <a href = "./topics/{{topics[item].hashID}}.html"> {{item}} </a> &nbsp;&nbsp;&nbsp; {% endfor %}
 	</p>
 	</nav>
 
@@ -31,7 +32,7 @@ nav {
 
 <ul>
 {% for item in docs_ns %}
-	<li><a href="./article/{{item.hashID}}.html">{{item.name}}</a>   更新日期:{{item.date}}</li>
+	<li><a href="./article/{{item.hashID}}.html">{{item.name}}</a>   <br>更新日期:{{item.dtime}}</li>
 {% endfor %}
 </ul>
 </div>
