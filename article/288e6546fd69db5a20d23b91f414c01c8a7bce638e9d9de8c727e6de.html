@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>八皇后解题思路记载</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="../static/css/render.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>八皇后解题思路记载<h1>
+<hr />
+<h1>八皇后解题思路记载</h1>
+<hr />
+<p>恰巧同事和咱一起讨论这个问题，下面把理解和解题的思路整理出来</p>
+<blockquote>
+<p>题目：在<code>8X8格</code>的国际象棋上摆放<code>八个皇后</code>，使其<code>不能互相攻击</code>，即任意两个皇后都不能处于<code>同一行</code>、<code>同一列</code>或<code>同一斜线</code>上，问有多少种摆法。</p>
+</blockquote>
+<p>这个问题经典的写法有好多，可以参考<a href="http://en.wikipedia.org/wiki/Eight_queens_puzzle">wiki:Eight_queens_puzzle</a>.</p>
+<p>首先看一下如何构建这个模型和对应的算法</p>
+<p><img alt="" src="http://img.my.csdn.net/uploads/201301/18/1358486047_4825.jpg" /></p>
+<p>上面是棋盘</p>
+<p>已经存在两个落点(0,0) , (1,2)</p>
+<ul>
+<li>
+<p>如果我们是顺序从行来一行一行的放每一个皇后的话，那么行的顺序必然是 0,1,2,3,4,5,6,7，所以我们在结构里不进行记录行的数字，只建立一个记录列的list，如[0, 4, 7, 5, 2, 6, 1, 3]</p>
+</li>
+<li>
+<p>第一次放入皇后不需要考虑会不会被其他皇后吃掉，因为还没有任何皇后。那么下一次放入的时候就需要知道哪些能放，哪些不能放。所以我们需要定义个函数来生成<code>可以放入皇后的安全列表</code> <code>Safe( a )</code>。</p>
+</li>
+<li>
+<p>我们需要定义一套递归结构来根据<code>Safe</code>生成一个回溯结构，然后取出其中个数为8的记录，就是我们要的结果。</p>
+</li>
+</ul>
+<p>实现的程序如下:</p>
+<p>Safe函数：</p>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #d0d0d0">def</span> <span style="color: #d0d0d0">Safe(a):</span>
+    <span style="color: #d0d0d0">tl</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">[]</span>
+    <span style="color: #d0d0d0">n</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">len(a)</span>
+    <span style="color: #6ab825; font-weight: bold">for</span> <span style="color: #d0d0d0">index,i</span> <span style="color: #d0d0d0">in</span> <span style="color: #d0d0d0">enumerate(a):</span>
+        <span style="color: #d0d0d0">tl</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">tl</span> <span style="color: #d0d0d0">+</span> <span style="color: #d0d0d0">[</span> <span style="color: #d0d0d0">var-n+index</span> <span style="color: #d0d0d0">,</span> <span style="color: #d0d0d0">var</span> <span style="color: #d0d0d0">,</span> <span style="color: #d0d0d0">var+n-index</span> <span style="color: #d0d0d0">]</span>
+<span style="color: #d0d0d0">tl</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">distinct(</span>  <span style="color: #d0d0d0">[</span> <span style="color: #d0d0d0">l</span> <span style="color: #6ab825; font-weight: bold">for</span> <span style="color: #d0d0d0">l</span> <span style="color: #d0d0d0">in</span> <span style="color: #d0d0d0">tl</span> <span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">not</span> <span style="color: #d0d0d0">(</span> <span style="color: #d0d0d0">l</span> <span style="color: #d0d0d0">&gt;</span> <span style="color: #3677a9">7</span> <span style="color: #d0d0d0">or</span> <span style="color: #d0d0d0">l</span> <span style="color: #d0d0d0">&lt;</span><span style="color: #3677a9">0</span> <span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">]</span> <span style="color: #d0d0d0">)</span>
+
+<span style="color: #d0d0d0">sl</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">[</span> <span style="color: #d0d0d0">i</span> <span style="color: #6ab825; font-weight: bold">for</span> <span style="color: #d0d0d0">i</span> <span style="color: #d0d0d0">in</span> <span style="color: #d0d0d0">range(</span><span style="color: #3677a9">8</span><span style="color: #d0d0d0">)</span> <span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">i</span> <span style="color: #d0d0d0">not</span> <span style="color: #d0d0d0">in</span> <span style="color: #d0d0d0">tl</span> <span style="color: #d0d0d0">]</span>
+<span style="color: #6ab825; font-weight: bold">return</span> <span style="color: #d0d0d0">sl</span>
+</pre></div>
+</td></tr></table>
+
+<p>queens递归函数：</p>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #d0d0d0">def</span> <span style="color: #d0d0d0">queens(alist,n):</span>
+    <span style="color: #6ab825; font-weight: bold">for</span> <span style="color: #d0d0d0">l</span> <span style="color: #d0d0d0">in</span> <span style="color: #d0d0d0">Safe(alist):</span>
+        <span style="color: #d0d0d0">tmp</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">alist</span> <span style="color: #d0d0d0">+</span> <span style="color: #d0d0d0">[l]</span>
+        <span style="color: #d0d0d0">queens(tmp,n-</span><span style="color: #3677a9">1</span><span style="color: #d0d0d0">)</span>
+<span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">len(alist)</span> <span style="color: #d0d0d0">==</span> <span style="color: #3677a9">8</span> <span style="color: #d0d0d0">:</span> <span style="color: #d0d0d0">print</span>  <span style="color: #d0d0d0">alist</span>
+</pre></div>
+</td></tr></table>
+
+<p>取唯一性的函数：</p>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3
+4</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #d0d0d0">def</span> <span style="color: #d0d0d0">distinct(l):</span>
+    <span style="color: #d0d0d0">d</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">{}</span>
+    <span style="color: #d0d0d0">map(setitem,</span> <span style="color: #d0d0d0">(d,)*len(l),</span> <span style="color: #d0d0d0">l,</span> <span style="color: #d0d0d0">[])</span>
+    <span style="color: #6ab825; font-weight: bold">return</span> <span style="color: #d0d0d0">d.keys()</span>
+</pre></div>
+</td></tr></table>
+
+<p>main函数：</p>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #d0d0d0">from</span> <span style="color: #d0d0d0">operator</span> <span style="color: #d0d0d0">import</span> <span style="color: #d0d0d0">setitem</span>
+<span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">__name__</span> <span style="color: #d0d0d0">==</span> <span style="color: #ed9d13">&quot;__main__&quot;</span><span style="color: #d0d0d0">:</span>
+    <span style="color: #6ab825; font-weight: bold">for</span> <span style="color: #d0d0d0">y</span> <span style="color: #d0d0d0">in</span> <span style="color: #d0d0d0">range(</span><span style="color: #3677a9">8</span><span style="color: #d0d0d0">):</span>
+        <span style="color: #d0d0d0">alist</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">[]</span>
+        <span style="color: #d0d0d0">alist.append(y)</span>
+        <span style="color: #d0d0d0">queens(alist,</span><span style="color: #3677a9">8</span><span style="color: #d0d0d0">)</span>
+</pre></div>
+</td></tr></table>
+
+<a href="http:/ttch.github.com">回到首页</a>
+</body>
+</html>
+<!-- css from http://kevinburke.bitbucket.org/markdowncss/ -->
+

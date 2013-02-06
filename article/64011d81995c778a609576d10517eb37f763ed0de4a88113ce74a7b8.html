@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>shellsort排序有趣的试验</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="../static/css/render.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>shellsort排序有趣的试验<h1>
+<h1>shellsort排序有趣的试验</h1>
+<p>今天和同事讨论关于一个shell排序的问题。</p>
+<p>原因是在<a href="http://www.amazon.cn/%E7%AE%97%E6%B3%95-%E5%A1%9E%E5%A5%87%E5%A8%81%E5%85%8B/dp/B009OCFQ0O/ref=sr_1_1?ie=UTF8&amp;qid=1359129831&amp;sr=8-1">&lt;算法&gt;</a>这本书上看到的方法，其中代码就不贴出来了，因为效率不是十分高。那么同事给我演示的是<code>23秒</code>多。我当时用python写了半天也没逾越这个数！我们机器是一样的配置一样的型号，几乎没有不同，除了密码！处理器是i5 2450 4核心，使用的是同样的数据样本。我用的是python2.5，他使用的是python2.7。因为程序是在同一个机器上跑的，跑完到另一个机器跑。</p>
+<p><a href="http://en.wikibooks.org/wiki/Algorithm_implementation/Sorting/Shell_sort">wiki版本</a>（不少网站都会贴着个代码）</p>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #d0d0d0">def</span> <span style="color: #d0d0d0">shellSort(array):</span>
+    <span style="color: #ed9d13">&quot;Shell sort using Shell&#39;s (original) gap sequence: n/2, n/4, ..., 1.&quot;</span>
+    <span style="color: #d0d0d0">gap</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">len(array)</span> <span style="color: #999999; font-style: italic">// 2</span>
+    <span style="color: #a61717; background-color: #e3d2d2">#</span> <span style="color: #d0d0d0">loop</span> <span style="color: #d0d0d0">over</span> <span style="color: #d0d0d0">the</span> <span style="color: #d0d0d0">gaps</span>
+    <span style="color: #6ab825; font-weight: bold">while</span> <span style="color: #d0d0d0">gap</span> <span style="color: #d0d0d0">&gt;</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">:</span>
+    <span style="color: #a61717; background-color: #e3d2d2">#</span> <span style="color: #6ab825; font-weight: bold">do</span> <span style="color: #d0d0d0">the</span> <span style="color: #d0d0d0">insertion</span> <span style="color: #d0d0d0">sort</span>
+        <span style="color: #6ab825; font-weight: bold">for</span> <span style="color: #d0d0d0">i</span> <span style="color: #d0d0d0">in</span> <span style="color: #d0d0d0">range(gap,</span> <span style="color: #d0d0d0">len(array)):</span>
+            <span style="color: #d0d0d0">val</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">array[i]</span>
+            <span style="color: #d0d0d0">j</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">i</span>
+            <span style="color: #6ab825; font-weight: bold">while</span> <span style="color: #d0d0d0">j</span> <span style="color: #d0d0d0">&gt;=</span> <span style="color: #d0d0d0">gap</span> <span style="color: #d0d0d0">and</span> <span style="color: #d0d0d0">array[j</span> <span style="color: #d0d0d0">-</span> <span style="color: #d0d0d0">gap]</span> <span style="color: #d0d0d0">&gt;</span> <span style="color: #d0d0d0">val:</span>
+                <span style="color: #d0d0d0">array[j]</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">array[j</span> <span style="color: #d0d0d0">-</span> <span style="color: #d0d0d0">gap]</span>
+                <span style="color: #d0d0d0">j</span> <span style="color: #d0d0d0">-=</span> <span style="color: #d0d0d0">gap</span>
+            <span style="color: #d0d0d0">array[j]</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">val</span>
+        <span style="color: #d0d0d0">gap</span> <span style="color: #999999; font-style: italic">//= 2</span>
+</pre></div>
+</td></tr></table>
+
+<p>然后我发现我代码的中间变量和冗余代码十分多，我尝试砍掉中间变量。我们就用中间修改差不多的原始版本吧，我们这里做为第一版本！</p>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #d0d0d0">def</span> <span style="color: #d0d0d0">sort(a):</span>
+    <span style="color: #d0d0d0">n</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">len(a)</span>
+    <span style="color: #d0d0d0">h</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">n</span> <span style="color: #999999; font-style: italic">// 2</span>
+    <span style="color: #6ab825; font-weight: bold">while</span> <span style="color: #d0d0d0">h</span> <span style="color: #d0d0d0">&gt;</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">:</span>
+        <span style="color: #a61717; background-color: #e3d2d2">#</span><span style="color: #d0d0d0">print</span> <span style="color: #d0d0d0">h</span>
+        <span style="color: #6ab825; font-weight: bold">for</span> <span style="color: #d0d0d0">i</span> <span style="color: #d0d0d0">in</span> <span style="color: #d0d0d0">xrange(h</span> <span style="color: #d0d0d0">,</span> <span style="color: #d0d0d0">n):</span>
+            <span style="color: #d0d0d0">val</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">a[i]</span> <span style="color: #a61717; background-color: #e3d2d2">#注意这个地方</span>
+            <span style="color: #6ab825; font-weight: bold">for</span> <span style="color: #d0d0d0">j</span> <span style="color: #d0d0d0">in</span> <span style="color: #d0d0d0">xrange(i,h-</span><span style="color: #3677a9">2</span><span style="color: #d0d0d0">,-h):</span>
+                <span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">a[j-h]</span> <span style="color: #d0d0d0">&gt;</span> <span style="color: #d0d0d0">val</span> <span style="color: #d0d0d0">:</span> <span style="color: #d0d0d0">temp</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">a[j-h]</span> <span style="color: #d0d0d0">;</span> <span style="color: #d0d0d0">a[j-h]</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">a[j]</span> <span style="color: #d0d0d0">;</span> <span style="color: #d0d0d0">a[j]</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">temp</span>
+                <span style="color: #d0d0d0">else:</span> <span style="color: #6ab825; font-weight: bold">break</span>
+        <span style="color: #d0d0d0">h</span> <span style="color: #999999; font-style: italic">//= 2</span>
+</pre></div>
+</td></tr></table>
+
+<p>第1次修改</p>
+<blockquote>
+<p>这个版本我修改掉了交换值，这个小小的增加一个开销pack和unpack的时候，总体会增加不到0.01秒。但代码的可读性很高！</p>
+</blockquote>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #d0d0d0">def</span> <span style="color: #d0d0d0">sort(a):</span>
+    <span style="color: #d0d0d0">n</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">len(a)</span>
+    <span style="color: #d0d0d0">h</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">n</span> <span style="color: #999999; font-style: italic">// 2</span>
+    <span style="color: #6ab825; font-weight: bold">while</span> <span style="color: #d0d0d0">h</span> <span style="color: #d0d0d0">&gt;</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">:</span>
+        <span style="color: #a61717; background-color: #e3d2d2">#</span><span style="color: #d0d0d0">print</span> <span style="color: #d0d0d0">h</span>
+        <span style="color: #6ab825; font-weight: bold">for</span> <span style="color: #d0d0d0">i</span> <span style="color: #d0d0d0">in</span> <span style="color: #d0d0d0">xrange(h</span> <span style="color: #d0d0d0">,</span> <span style="color: #d0d0d0">n):</span>
+            <span style="color: #d0d0d0">val</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">a[i]</span>
+            <span style="color: #6ab825; font-weight: bold">for</span> <span style="color: #d0d0d0">j</span> <span style="color: #d0d0d0">in</span> <span style="color: #d0d0d0">xrange(i,h-</span><span style="color: #3677a9">2</span><span style="color: #d0d0d0">,-h):</span>
+                <span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">a[j-h]</span> <span style="color: #d0d0d0">&gt;</span> <span style="color: #d0d0d0">val</span> <span style="color: #d0d0d0">:</span> <span style="color: #d0d0d0">a[j],a[j-h]</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">a[j-h],a[j]</span>
+                <span style="color: #d0d0d0">else:</span> <span style="color: #6ab825; font-weight: bold">break</span>
+        <span style="color: #d0d0d0">h</span> <span style="color: #999999; font-style: italic">//= 2</span>
+</pre></div>
+</td></tr></table>
+
+<p>第2次修改：</p>
+<blockquote>
+<p>这里很重要，我修改掉了else。这里用了一个测试中看到的<code>情况1</code>。<code>就是如果子条件内进行for循环时，如果发现需要交换的变量，那么循环可以结束！</code>这个直接减少了大概10秒左右的开销，也就是接近，有的时候会快过wiki版本的平均值。</p>
+</blockquote>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #d0d0d0">def</span> <span style="color: #d0d0d0">sort(a):</span>
+    <span style="color: #d0d0d0">n</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">len(a)</span>
+    <span style="color: #d0d0d0">h</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">n</span> <span style="color: #999999; font-style: italic">// 2</span>
+    <span style="color: #6ab825; font-weight: bold">while</span> <span style="color: #d0d0d0">h</span> <span style="color: #d0d0d0">&gt;</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">:</span>
+        <span style="color: #a61717; background-color: #e3d2d2">#</span><span style="color: #d0d0d0">print</span> <span style="color: #d0d0d0">h</span>
+        <span style="color: #6ab825; font-weight: bold">for</span> <span style="color: #d0d0d0">i</span> <span style="color: #d0d0d0">in</span> <span style="color: #d0d0d0">xrange(h</span> <span style="color: #d0d0d0">,</span> <span style="color: #d0d0d0">n):</span>
+            <span style="color: #d0d0d0">val</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">a[i]</span>
+            <span style="color: #6ab825; font-weight: bold">for</span> <span style="color: #d0d0d0">j</span> <span style="color: #d0d0d0">in</span> <span style="color: #d0d0d0">xrange(i,h-</span><span style="color: #3677a9">2</span><span style="color: #d0d0d0">,-h):</span>
+                <span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">a[j-h]</span> <span style="color: #d0d0d0">&gt;</span> <span style="color: #d0d0d0">val</span> <span style="color: #d0d0d0">:</span> <span style="color: #d0d0d0">a[j],a[j-h]</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">a[j-h],a[j]</span> <span style="color: #d0d0d0">;</span> <span style="color: #6ab825; font-weight: bold">break</span>
+        <span style="color: #d0d0d0">h</span> <span style="color: #999999; font-style: italic">//= 2</span>
+</pre></div>
+</td></tr></table>
+
+<p>最终版本：</p>
+<blockquote>
+<p>这里我去掉了临时变量，这里很关键，秒杀wiki版本的另一个重要 <code>情况2</code>:<code>情况1</code> <code>发生的前置条件中的被对比值必然是要交换的值。</code>根据这个直接改掉程序，秒杀接近4个秒单位！</p>
+</blockquote>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #d0d0d0">def</span> <span style="color: #d0d0d0">sort(a):</span>
+    <span style="color: #d0d0d0">n</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">len(a)</span>
+    <span style="color: #d0d0d0">h</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">n</span> <span style="color: #999999; font-style: italic">// 2</span>
+    <span style="color: #6ab825; font-weight: bold">while</span> <span style="color: #d0d0d0">h</span> <span style="color: #d0d0d0">&gt;</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">:</span>
+        <span style="color: #6ab825; font-weight: bold">for</span> <span style="color: #d0d0d0">i</span> <span style="color: #d0d0d0">in</span> <span style="color: #d0d0d0">xrange(h</span> <span style="color: #d0d0d0">,</span> <span style="color: #d0d0d0">n):</span> 
+            <span style="color: #6ab825; font-weight: bold">for</span> <span style="color: #d0d0d0">j</span> <span style="color: #d0d0d0">in</span> <span style="color: #d0d0d0">xrange(i,h-</span><span style="color: #3677a9">2</span><span style="color: #d0d0d0">,-h):</span>
+                <span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">a[j-h]</span> <span style="color: #d0d0d0">&gt;</span> <span style="color: #d0d0d0">a[j]</span> <span style="color: #d0d0d0">:</span> <span style="color: #d0d0d0">a[j],a[j-h]</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">a[j-h],a[j]</span> <span style="color: #d0d0d0">;</span> <span style="color: #6ab825; font-weight: bold">break</span>
+        <span style="color: #d0d0d0">h</span> <span style="color: #999999; font-style: italic">//= 2</span>
+</pre></div>
+</td></tr></table>
+
+<p>这里为什么说是情况，而不是说定理？因为我证明不了。。哈哈。这个过程太复杂。
+至此，算是7行解决了这个问题，从时间开销和代码行数都完爆wiki版本的程序。</p>
+<p>总结：感谢图灵能够出版<a href="http://www.amazon.cn/%E7%AE%97%E6%B3%95-%E5%A1%9E%E5%A5%87%E5%A8%81%E5%85%8B/dp/B009OCFQ0O/ref=sr_1_1?ie=UTF8&amp;qid=1359129831&amp;sr=8-1">&lt;算法&gt;</a>这本书的翻译版本，更感谢<a href="http://weibo.com/hellmage">@一盆花</a> 谢大给我们带来这么好的书。只有思考才会发现，只有发现才能改变，改变错了，再思考，呵呵。</p>
+
+<a href="http:/ttch.github.com">回到首页</a>
+</body>
+</html>
+<!-- css from http://kevinburke.bitbucket.org/markdowncss/ -->
+

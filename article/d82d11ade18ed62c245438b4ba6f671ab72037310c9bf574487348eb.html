@@ -4,7 +4,6 @@
 <title>什么是函数引用</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href="../static/css/render.css" rel="stylesheet" type="text/css" />
-<link href="../static/css/hi.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <h1>什么是函数引用<h1>
@@ -15,21 +14,21 @@
 <h1>什么是类方法引用？</h1>
 <p>Any lambda expression may be thought of as an anonymous representation of a function descriptor of a functional interface. An alternative way representing a function descriptor is with a concrete method of an existing class. Method references are handles to such existing methods. For example,</p>
 <p>一个lambda表达式可以被认为代表一个匿名函数式接口的函数描述符。一个可供选择的方式是一个函数描述符表示为是一个已经存在的类的一个具体类方法。类方法引用是操纵如这样已经存在的类方法。如下例子：</p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="codehilite"><pre>String::valueOf
-Integer::compare
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #d0d0d0">String::valueOf</span>
+<span style="color: #d0d0d0">Integer::compare</span>
 </pre></div>
 </td></tr></table>
 
 <p>are references to static methods, analogous to lambda expressions that do not capture any instance or local variables. (Instance method references are treated next.) For a trivial example, the method in the class java.util.Arrays</p>
 <p>是静态类方法的引用，类似的lambda表达式并不捕获任何实例或者本地变量（实例类方法引用在下一节），举一个比较深入的例子，在类java.until.Arrays中的类方法：</p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre>public static &lt;T&gt; void sort(T[] a, Comparator c);
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #6ab825; font-weight: bold">public</span> <span style="color: #447fcf">static</span> <span style="color: #d0d0d0">&lt;</span><span style="color: #24909d">T</span><span style="color: #d0d0d0">&gt;</span> <span style="color: #24909d">void</span> <span style="color: #24909d">sort</span><span style="color: #d0d0d0">(</span><span style="color: #24909d">T</span><span style="color: #a61717; background-color: #e3d2d2">[</span><span style="color: #cd2828; font-weight: bold">]</span> a, Comparator c);
 </pre></div>
 </td></tr></table>
 
 <p>expects a Comparator for its second argument. The method Integer.compare has a signature that is type-compatible with Comparator’s function descriptor—that is, its compare method—so it would be legal to call Arrays.sort like this:</p>
 <p>这个函数的第二个参数指定一个比较器。类方法 Integer.compare有一个签名是和Comparator的函数描述符是兼容类型，他是比较函数，所以他能像下面这样合法调用</p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre>Arrays.sort(myIntegerArray, Integer::compare)
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #d0d0d0">Arrays.sort(myIntegerArray,</span> <span style="color: #d0d0d0">Integer::compare)</span>
 </pre></div>
 </td></tr></table>
 
@@ -41,5 +40,5 @@ Integer::compare
 <a href="http:/ttch.github.com">回到首页</a>
 </body>
 </html>
-
+<!-- css from http://kevinburke.bitbucket.org/markdowncss/ -->
 

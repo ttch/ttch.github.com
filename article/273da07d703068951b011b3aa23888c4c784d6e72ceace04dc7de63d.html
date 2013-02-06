@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>多线程</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="../static/css/render.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>多线程<h1>
+<h1>单CPU下的多线程和单线程（单进程）的区别。</h1>
+<blockquote>
+<p>有两点：</p>
+</blockquote>
+<ol>
+<li>CPU调度的方式和效率不一样。</li>
+<li>语法和语义上不同。</li>
+</ol>
+<p>解释 原因1 比如</p>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #d0d0d0">openfile</span>
+</pre></div>
+</td></tr></table>
+
+<blockquote>
+<p>例子:打开一个大文件，读取内容，并显示在一个文本框内并高亮显示关键词。</p>
+</blockquote>
+<p>单进程或者单线程，是这样：</p>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3
+4</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #a61717; background-color: #e3d2d2">步骤</span><span style="color: #3677a9">1</span><span style="color: #d0d0d0">:openfile</span>
+<span style="color: #a61717; background-color: #e3d2d2">步骤</span><span style="color: #3677a9">2</span><span style="color: #a61717; background-color: #e3d2d2">：</span><span style="color: #d0d0d0">CPU</span><span style="color: #a61717; background-color: #e3d2d2">挂起等待</span><span style="color: #d0d0d0">I/O</span><span style="color: #a61717; background-color: #e3d2d2">硬件响应，如果不响应，一直等待。</span>
+<span style="color: #a61717; background-color: #e3d2d2">步骤</span><span style="color: #3677a9">3</span><span style="color: #a61717; background-color: #e3d2d2">：一但响应，读取缓冲区内容并写入到临时变量。</span>
+<span style="color: #a61717; background-color: #e3d2d2">步骤</span><span style="color: #3677a9">4</span><span style="color: #a61717; background-color: #e3d2d2">：根据临时变量进行文法分析，有特殊关键词进行控件着色并显示。</span>
+</pre></div>
+</td></tr></table>
+
+<p>多线程，是这样：</p>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3
+4</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #a61717; background-color: #e3d2d2">线程</span><span style="color: #3677a9">1</span> <span style="color: #a61717; background-color: #e3d2d2">步骤</span><span style="color: #3677a9">1</span><span style="color: #a61717; background-color: #e3d2d2">：</span><span style="color: #d0d0d0">openfile</span>
+<span style="color: #a61717; background-color: #e3d2d2">线程</span><span style="color: #3677a9">2</span> <span style="color: #a61717; background-color: #e3d2d2">步骤</span><span style="color: #3677a9">2</span><span style="color: #a61717; background-color: #e3d2d2">：等待线程</span><span style="color: #3677a9">1</span><span style="color: #a61717; background-color: #e3d2d2">给这个线程发送消息，如果没有发送消息，和上面没有区别。</span>
+<span style="color: #a61717; background-color: #e3d2d2">线程</span><span style="color: #3677a9">2</span> <span style="color: #a61717; background-color: #e3d2d2">步骤</span><span style="color: #3677a9">2</span><span style="color: #a61717; background-color: #e3d2d2">：接收到消息并得到消息中缓冲的字符，写入临时变量。</span>
+<span style="color: #a61717; background-color: #e3d2d2">线程</span><span style="color: #3677a9">3</span> <span style="color: #a61717; background-color: #e3d2d2">步骤</span><span style="color: #3677a9">3</span><span style="color: #a61717; background-color: #e3d2d2">：根据临时变量进行文法分析，有特殊关键词进行控件着色并显示。</span>
+</pre></div>
+</td></tr></table>
+
+<p>上面粗略看，感觉是一样的。但一旦响应后是不一样的。
+多线程的程序线程1的openfile开销大小并不会影响到线程2的实际工作效率，因为cpu指令会根据<code>两个线程的调度最优化执行</code>，线程2的等待并不因为线程1的I/O等待而等待。（如果你问如果I/O等待这两者是一样的，那我告诉你<code>磁盘处理器</code>模块执行是独立的，并不和CPU占用同一周期时间片，当然其他的I/O处理器也是一样。 ^.^）</p>
+<p>而单进程或者单线程，在文件每次read的时候会产生等待也就是无法执行后面3个步骤。</p>
+<p>所以在单CPU下，多线程和单线程区别是在比较耗时的操作上或者良好的软件体验上，区别十分大！</p>
+
+<a href="http:/ttch.github.com">回到首页</a>
+</body>
+</html>
+<!-- css from http://kevinburke.bitbucket.org/markdowncss/ -->
+

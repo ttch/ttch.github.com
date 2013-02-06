@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>20130201_javafunction</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="../static/css/render.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>20130201_javafunction<h1>
+<h1>function</h1>
+<p>大家强烈说一下java里的<code>function</code>，可惜java里没有<code>纯粹意义</code>上的<code>function</code></p>
+<p>java因为是面向对象语言所以只有method</p>
+<p>无论如何！他都是围绕method基础上进行的。</p>
+<p>那么我们来看一下function的概念：</p>
+<ul>
+<li>
+<p>call调用。</p>
+</li>
+<li>
+<p>BackCall调用。</p>
+</li>
+</ul>
+<p>那么我们先看一下载java中如何实现上面概念的。</p>
+<p>function声明（严格意义上这个叫interface method 如果声明我觉得应该叫 interface function Signature )</p>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #d0d0d0">interface</span> <span style="color: #d0d0d0">a</span> <span style="color: #d0d0d0">{</span>
+    <span style="color: #d0d0d0">public</span> <span style="color: #6ab825; font-weight: bold">void</span> <span style="color: #d0d0d0">test();</span>
+<span style="color: #d0d0d0">}</span>
+
+<span style="color: #d0d0d0">class</span> <span style="color: #d0d0d0">b{</span>
+    <span style="color: #d0d0d0">public</span> <span style="color: #6ab825; font-weight: bold">void</span> <span style="color: #d0d0d0">test(</span> <span style="color: #d0d0d0">interface</span> <span style="color: #d0d0d0">a){</span>
+        <span style="color: #d0d0d0">a.test();</span>
+    <span style="color: #d0d0d0">}</span>
+<span style="color: #d0d0d0">}</span>
+</pre></div>
+</td></tr></table>
+
+<p>调用如下：</p>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #d0d0d0">new</span> <span style="color: #447fcf">a</span><span style="color: #d0d0d0">(){</span>
+    <span style="color: #a61717; background-color: #e3d2d2">@</span><span style="color: #d0d0d0">override</span>
+    <span style="color: #d0d0d0">public</span> <span style="color: #6ab825; font-weight: bold">void</span> <span style="color: #d0d0d0">test(){</span>
+        <span style="color: #d0d0d0">System.out.println(</span><span style="color: #ed9d13">&quot;hello&quot;</span><span style="color: #d0d0d0">);</span>
+    <span style="color: #d0d0d0">}</span>
+<span style="color: #d0d0d0">}.test();</span>
+</pre></div>
+</td></tr></table>
+
+<p>回调如下：</p>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #d0d0d0">new</span> <span style="color: #447fcf">b</span><span style="color: #d0d0d0">().test(new</span> <span style="color: #d0d0d0">a(){</span>
+    <span style="color: #a61717; background-color: #e3d2d2">@</span><span style="color: #d0d0d0">override</span>
+    <span style="color: #d0d0d0">public</span> <span style="color: #6ab825; font-weight: bold">void</span> <span style="color: #d0d0d0">test(){</span>
+        <span style="color: #d0d0d0">System.out.println(</span><span style="color: #ed9d13">&quot;hello&quot;</span><span style="color: #d0d0d0">);</span>
+    <span style="color: #d0d0d0">}</span>
+<span style="color: #d0d0d0">}</span>
+</pre></div>
+</td></tr></table>
+
+<p>习题：</p>
+<p>习题1 请写出 interface instance  function ,interface function 两种的调用和回调方法。
+习题2 写一个插入排序 并在其中考虑如何使用function
+习题3 思考一下什么情况会这么用，什么情况不适合这么用？这么用的好处是什么？</p>
+
+<a href="http:/ttch.github.com">回到首页</a>
+</body>
+</html>
+<!-- css from http://kevinburke.bitbucket.org/markdowncss/ -->
+

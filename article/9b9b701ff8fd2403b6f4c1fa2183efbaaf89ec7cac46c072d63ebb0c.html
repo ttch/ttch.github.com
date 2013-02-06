@@ -1,0 +1,307 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>java趣味短码-能像 python的 enumerate一样吗</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="../static/css/render.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>java趣味短码-能像 python的 enumerate一样吗<h1>
+<h1>Java趣味短码 - 能像 python的 enumerate一样吗？</h1>
+<p>昨天和童鞋讨论过关于IF，然后童鞋的朋友是个pythoner，也在一起讨论，当时提出一个问题，java没有像python里的enumerate这个东西吧？其实java里没有的东西还慢多的。不过我们可以让他有。</p>
+<p>下面是python的代码</p>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #6ab825; font-weight: bold">for</span> <span style="color: #d0d0d0">index,var</span> <span style="color: #d0d0d0">in</span> <span style="color: #d0d0d0">enumerate(a):</span>
+    <span style="color: #d0d0d0">tl</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">tl</span> <span style="color: #d0d0d0">+</span> <span style="color: #d0d0d0">[</span> <span style="color: #d0d0d0">var-n+index</span> <span style="color: #d0d0d0">,</span> <span style="color: #d0d0d0">var</span> <span style="color: #d0d0d0">,</span> <span style="color: #d0d0d0">var+n-index</span> <span style="color: #d0d0d0">]</span>
+</pre></div>
+</td></tr></table>
+
+<p>enumerate(a)</p>
+<p>假设</p>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #d0d0d0">a</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">[</span><span style="color: #ed9d13">&quot;test&quot;</span><span style="color: #d0d0d0">,</span><span style="color: #ed9d13">&quot;hello&quot;</span><span style="color: #d0d0d0">,</span><span style="color: #ed9d13">&quot;test&quot;</span><span style="color: #d0d0d0">]</span>
+</pre></div>
+</td></tr></table>
+
+<p>能根据a的结构生成如下结构：</p>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #d0d0d0">a</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">(</span><span style="color: #3677a9">0</span><span style="color: #d0d0d0">,</span><span style="color: #ed9d13">&quot;test&quot;</span><span style="color: #d0d0d0">),(</span><span style="color: #3677a9">1</span><span style="color: #d0d0d0">,</span><span style="color: #ed9d13">&quot;hello&quot;</span><span style="color: #d0d0d0">),(</span><span style="color: #3677a9">2</span><span style="color: #d0d0d0">,</span><span style="color: #ed9d13">&quot;test&quot;</span><span style="color: #d0d0d0">)</span>
+</pre></div>
+</td></tr></table>
+
+<hr />
+<p>在java中如何实现呢？</p>
+<p>如果你去搜索stackoverflow 找到这样一篇<a href="http://stackoverflow.com/questions/7167253/is-there-a-java-equivalent-of-pythons-enumerate-function">文章,戳进</a></p>
+<p>里面的方法是这样</p>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #24909d">List</span><span style="color: #d0d0d0">&lt;</span><span style="color: #6ab825; font-weight: bold">String</span><span style="color: #d0d0d0">&gt;</span> <span style="color: #d0d0d0">numbers</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">Arrays.asList(</span><span style="color: #ed9d13">&quot;zero&quot;</span><span style="color: #d0d0d0">,</span> <span style="color: #ed9d13">&quot;one&quot;</span><span style="color: #d0d0d0">,</span> <span style="color: #ed9d13">&quot;two&quot;</span><span style="color: #d0d0d0">);</span>
+<span style="color: #d0d0d0">ListIterator&lt;</span><span style="color: #6ab825; font-weight: bold">String</span><span style="color: #d0d0d0">&gt;</span> <span style="color: #d0d0d0">it</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">numbers.listIterator();</span>
+<span style="color: #6ab825; font-weight: bold">while</span> <span style="color: #d0d0d0">(it.hasNext())</span> <span style="color: #d0d0d0">{</span>
+    <span style="color: #d0d0d0">System.out.println(it.nextIndex()</span> <span style="color: #d0d0d0">+</span> <span style="color: #ed9d13">&quot; &quot;</span> <span style="color: #d0d0d0">+</span> <span style="color: #d0d0d0">it.next());</span>
+<span style="color: #d0d0d0">}</span>
+</pre></div>
+</td></tr></table>
+
+<p>如上的方法虽然实现了基本需求，但不美观。</p>
+<p>那么我们怎么实现呢？</p>
+<p>思路如下：</p>
+<ul>
+<li>实现迭代器</li>
+<li>建立一个替代对象，增加一个索引和一个对象。</li>
+</ul>
+<p>首先定义一个迭代对象</p>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #a61717; background-color: #e3d2d2">@</span><span style="color: #d0d0d0">SuppressWarnings(</span><span style="color: #ed9d13">&quot;unused&quot;</span><span style="color: #d0d0d0">)</span>
+<span style="color: #d0d0d0">class</span> <span style="color: #d0d0d0">Enum{</span> 
+    <span style="color: #d0d0d0">public</span> <span style="color: #6ab825; font-weight: bold">int</span> <span style="color: #d0d0d0">I;</span>
+    <span style="color: #d0d0d0">public</span> <span style="color: #d0d0d0">Object</span> <span style="color: #d0d0d0">Obj;</span>
+    <span style="color: #d0d0d0">public</span> <span style="color: #447fcf">Enum</span><span style="color: #d0d0d0">(</span> <span style="color: #d0d0d0">Object</span> <span style="color: #d0d0d0">Obj</span> <span style="color: #d0d0d0">,</span> <span style="color: #d0d0d0">Integer</span> <span style="color: #d0d0d0">I){</span>
+        <span style="color: #d0d0d0">this.I</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">I;</span>
+        <span style="color: #d0d0d0">this.Obj</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">Obj;</span>
+    <span style="color: #d0d0d0">}</span>
+<span style="color: #d0d0d0">}</span>
+</pre></div>
+</td></tr></table>
+
+<p>然后我们定义enumerate对象</p>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #d0d0d0">@SuppressWarnings(</span><span style="color: #ed9d13">&quot;unchecked&quot;</span><span style="color: #d0d0d0">)</span>
+<span style="color: #24909d">class</span> <span style="color: #d0d0d0">Enumerate&lt;</span><span style="color: #24909d">T</span><span style="color: #d0d0d0">&gt;</span>  <span style="color: #d0d0d0">implements</span> <span style="color: #24909d">Iterator</span><span style="color: #d0d0d0">&lt;Enum&gt;</span> <span style="color: #d0d0d0">,</span> <span style="color: #d0d0d0">Iterable&lt;Enum&gt;{</span>
+    <span style="color: #6ab825; font-weight: bold">private</span> <span style="color: #447fcf">Iterator</span> <span style="color: #d0d0d0">it</span> <span style="color: #d0d0d0">;</span>
+    <span style="color: #6ab825; font-weight: bold">private</span> <span style="color: #447fcf">int</span> <span style="color: #d0d0d0">current;</span>
+
+    <span style="color: #6ab825; font-weight: bold">public</span> <span style="color: #447fcf">Enumerate</span><span style="color: #d0d0d0">(</span><span style="color: #bbbbbb">Collection</span><span style="color: #d0d0d0">&lt;</span><span style="color: #24909d">T</span><span style="color: #d0d0d0">&gt;</span> <span style="color: #24909d">t</span><span style="color: #d0d0d0">){</span>
+        <span style="color: #d0d0d0">it</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">t.iterator();</span>
+    <span style="color: #d0d0d0">}</span>
+
+    <span style="color: #d0d0d0">@Override</span>
+    <span style="color: #6ab825; font-weight: bold">public</span> <span style="color: #447fcf">boolean</span> <span style="color: #d0d0d0">hasNext()</span> <span style="color: #d0d0d0">{</span>
+        <span style="color: #6ab825; font-weight: bold">return</span> <span style="color: #d0d0d0">it.hasNext();</span>
+    <span style="color: #d0d0d0">}</span>
+
+    <span style="color: #d0d0d0">@Override</span>
+    <span style="color: #6ab825; font-weight: bold">public</span> <span style="color: #447fcf">Enum</span> <span style="color: #24909d">next</span><span style="color: #d0d0d0">()</span> <span style="color: #d0d0d0">{</span>
+        <span style="color: #6ab825; font-weight: bold">return</span> <span style="color: #24909d">new</span> <span style="color: #d0d0d0">Enum(it.next(),++current);</span>
+    <span style="color: #d0d0d0">}</span>
+
+    <span style="color: #d0d0d0">@Override</span>
+    <span style="color: #6ab825; font-weight: bold">public</span> <span style="color: #447fcf">void</span> <span style="color: #24909d">remove</span><span style="color: #d0d0d0">()</span> <span style="color: #d0d0d0">{</span>
+        <span style="color: #d0d0d0">it.remove();</span>
+
+    <span style="color: #d0d0d0">}</span>
+
+    <span style="color: #d0d0d0">@Override</span>
+    <span style="color: #6ab825; font-weight: bold">public</span> <span style="color: #447fcf">Iterator</span><span style="color: #d0d0d0">&lt;Enum&gt;</span> <span style="color: #24909d">iterator</span><span style="color: #d0d0d0">()</span> <span style="color: #d0d0d0">{</span>
+        <span style="color: #6ab825; font-weight: bold">return</span> <span style="color: #d0d0d0">this;</span>
+    <span style="color: #d0d0d0">}</span>
+<span style="color: #d0d0d0">}</span>
+</pre></div>
+</td></tr></table>
+
+<p>这个对象我们增加了一个current计数器。用来返回index的</p>
+<p>这里要说明为什么不用stackoverflow帖子中的方法，缺点就是当list或者set这种集合过大的时候。那么你的算法周期就要*2。这是很难让人接受的事情。</p>
+<p>所以使用迭代的话，会逐条记录返回，这样不会改变原来的代码时间。</p>
+<p>SO!我们可以看到如下代码了。</p>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3
+4</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #24909d">for</span> <span style="color: #d0d0d0">(</span> <span style="color: #d0d0d0">Enum</span> <span style="color: #d0d0d0">a</span> <span style="color: #d0d0d0">:</span> <span style="color: #24909d">new</span> <span style="color: #d0d0d0">Enumerate&lt;</span><span style="color: #6ab825; font-weight: bold">Integer</span><span style="color: #d0d0d0">&gt;(l)){</span>
+    <span style="color: #d0d0d0">System.out.println(a.Obj);</span>
+    <span style="color: #d0d0d0">System.out.println(a.I);</span>
+<span style="color: #d0d0d0">}</span>
+</pre></div>
+</td></tr></table>
+
+<p>是不是感觉很酷！</p>
+<p>下面的代码是一份完整的代码样例。</p>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #d0d0d0">package</span> <span style="color: #d0d0d0">tPackge;</span>
+
+<span style="color: #6ab825; font-weight: bold">import</span> <span style="color: #d0d0d0">java.util.AbstractList;</span>
+<span style="color: #6ab825; font-weight: bold">import</span> <span style="color: #d0d0d0">java.util.ArrayList;</span>
+<span style="color: #6ab825; font-weight: bold">import</span> <span style="color: #d0d0d0">java.util.Arrays;</span>
+<span style="color: #6ab825; font-weight: bold">import</span> <span style="color: #d0d0d0">java.util.Collection;</span>
+<span style="color: #6ab825; font-weight: bold">import</span> <span style="color: #d0d0d0">java.util.Iterator;</span>
+<span style="color: #6ab825; font-weight: bold">import</span> <span style="color: #d0d0d0">java.util.List;</span>
+<span style="color: #6ab825; font-weight: bold">import</span> <span style="color: #d0d0d0">java.util.ListIterator;</span>
+<span style="color: #6ab825; font-weight: bold">import</span> <span style="color: #d0d0d0">java.util.NoSuchElementException;</span>
+
+<span style="color: #d0d0d0">@SuppressWarnings(</span><span style="color: #ed9d13">&quot;unused&quot;</span><span style="color: #d0d0d0">)</span>
+<span style="color: #24909d">class</span> <span style="color: #d0d0d0">Enum{</span> 
+    <span style="color: #6ab825; font-weight: bold">public</span> <span style="color: #447fcf">int</span> <span style="color: #d0d0d0">I;</span>
+    <span style="color: #6ab825; font-weight: bold">public</span> <span style="color: #447fcf">Object</span> <span style="color: #d0d0d0">Obj;</span>
+    <span style="color: #6ab825; font-weight: bold">public</span> <span style="color: #447fcf">Enum</span><span style="color: #d0d0d0">(</span> <span style="color: #bbbbbb">Object</span> <span style="color: #d0d0d0">Obj</span> <span style="color: #d0d0d0">,</span> <span style="color: #bbbbbb">Integer</span> <span style="color: #d0d0d0">I){</span>
+        <span style="color: #d0d0d0">this.I</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">I;</span>
+        <span style="color: #d0d0d0">this.Obj</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">Obj;</span>
+    <span style="color: #d0d0d0">}</span>
+<span style="color: #d0d0d0">}</span>
+
+<span style="color: #d0d0d0">@SuppressWarnings(</span><span style="color: #ed9d13">&quot;unchecked&quot;</span><span style="color: #d0d0d0">)</span>
+<span style="color: #24909d">class</span> <span style="color: #d0d0d0">Enumerate&lt;</span><span style="color: #24909d">T</span><span style="color: #d0d0d0">&gt;</span>  <span style="color: #d0d0d0">implements</span> <span style="color: #24909d">Iterator</span><span style="color: #d0d0d0">&lt;Enum&gt;</span> <span style="color: #d0d0d0">,</span> <span style="color: #d0d0d0">Iterable&lt;Enum&gt;{</span>
+    <span style="color: #6ab825; font-weight: bold">private</span> <span style="color: #447fcf">Iterator</span> <span style="color: #d0d0d0">it</span> <span style="color: #d0d0d0">;</span>
+    <span style="color: #6ab825; font-weight: bold">private</span> <span style="color: #447fcf">int</span> <span style="color: #d0d0d0">current;</span>
+
+    <span style="color: #6ab825; font-weight: bold">public</span> <span style="color: #447fcf">Enumerate</span><span style="color: #d0d0d0">(</span><span style="color: #bbbbbb">Collection</span><span style="color: #d0d0d0">&lt;</span><span style="color: #24909d">T</span><span style="color: #d0d0d0">&gt;</span> <span style="color: #24909d">t</span><span style="color: #d0d0d0">){</span>
+        <span style="color: #d0d0d0">it</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">t.iterator();</span>
+    <span style="color: #d0d0d0">}</span>
+
+    <span style="color: #d0d0d0">@Override</span>
+    <span style="color: #6ab825; font-weight: bold">public</span> <span style="color: #447fcf">boolean</span> <span style="color: #d0d0d0">hasNext()</span> <span style="color: #d0d0d0">{</span>
+        <span style="color: #6ab825; font-weight: bold">return</span> <span style="color: #d0d0d0">it.hasNext();</span>
+    <span style="color: #d0d0d0">}</span>
+
+    <span style="color: #d0d0d0">@Override</span>
+    <span style="color: #6ab825; font-weight: bold">public</span> <span style="color: #447fcf">Enum</span> <span style="color: #24909d">next</span><span style="color: #d0d0d0">()</span> <span style="color: #d0d0d0">{</span>
+        <span style="color: #6ab825; font-weight: bold">return</span> <span style="color: #24909d">new</span> <span style="color: #d0d0d0">Enum(it.next(),++current);</span>
+    <span style="color: #d0d0d0">}</span>
+
+    <span style="color: #d0d0d0">@Override</span>
+    <span style="color: #6ab825; font-weight: bold">public</span> <span style="color: #447fcf">void</span> <span style="color: #24909d">remove</span><span style="color: #d0d0d0">()</span> <span style="color: #d0d0d0">{</span>
+        <span style="color: #d0d0d0">it.remove();</span>
+
+    <span style="color: #d0d0d0">}</span>
+
+    <span style="color: #d0d0d0">@Override</span>
+    <span style="color: #6ab825; font-weight: bold">public</span> <span style="color: #447fcf">Iterator</span><span style="color: #d0d0d0">&lt;Enum&gt;</span> <span style="color: #24909d">iterator</span><span style="color: #d0d0d0">()</span> <span style="color: #d0d0d0">{</span>
+        <span style="color: #6ab825; font-weight: bold">return</span> <span style="color: #d0d0d0">this;</span>
+    <span style="color: #d0d0d0">}</span>
+<span style="color: #d0d0d0">}</span>
+
+<span style="color: #6ab825; font-weight: bold">public</span> <span style="color: #447fcf">class</span> <span style="color: #d0d0d0">test02</span> <span style="color: #d0d0d0">{</span>
+
+    <span style="color: #999999; font-style: italic">/**</span>
+<span style="color: #999999; font-style: italic">     * @param args</span>
+<span style="color: #999999; font-style: italic">     */</span>
+    <span style="color: #6ab825; font-weight: bold">public</span> <span style="color: #447fcf">static</span> <span style="color: #24909d">void</span> <span style="color: #d0d0d0">main(</span><span style="color: #6ab825; font-weight: bold">String</span><span style="color: #a61717; background-color: #e3d2d2">[</span><span style="color: #cd2828; font-weight: bold">]</span> args) {
+        List <span style="color: #6ab825; font-weight: bold">&lt;Integer&gt;</span>  l = Arrays.asList(1,2,3,4,5,5);
+
+        int i = 0;
+        for ( Integer a : l){
+            System.out.println(i);
+            System.out.println(a);
+            i++;
+        }
+
+        for ( Enum a : new Enumerate<span style="color: #6ab825; font-weight: bold">&lt;Integer&gt;</span>(l)){
+            System.out.println(a.Obj);
+            System.out.println(a.I);
+        }
+    }
+
+}
+</pre></div>
+</td></tr></table>
+
+<a href="http:/ttch.github.com">回到首页</a>
+</body>
+</html>
+<!-- css from http://kevinburke.bitbucket.org/markdowncss/ -->
+

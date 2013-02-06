@@ -1,0 +1,206 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>java可以像python中的函数式工具里的reduce那样调用吗？(一)</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="../static/css/render.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>java可以像python中的函数式工具里的reduce那样调用吗？(一)<h1>
+<h1>函数式工具(一) - java可以像python中的函数式工具里的reduce那样调用吗？</h1>
+<p>python 里这样写，在java里是否也能这样写吗？</p>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #d0d0d0">reduce(add,</span> <span style="color: #d0d0d0">range(</span><span style="color: #3677a9">1</span><span style="color: #d0d0d0">,</span> <span style="color: #3677a9">11</span><span style="color: #d0d0d0">))</span>
+<span style="color: #d0d0d0">reduce(max,[</span><span style="color: #3677a9">11</span><span style="color: #d0d0d0">,-</span><span style="color: #3677a9">25</span><span style="color: #d0d0d0">])</span>
+</pre></div>
+</td></tr></table>
+
+<p>能！</p>
+<blockquote>
+<p>首先我们实现reduce这个函数。当然不可能事先全，因为java全处理的话，需要很长的代码，我们这里暂时只举3个例子。</p>
+</blockquote>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #24909d">class</span> <span style="color: #d0d0d0">ob{</span>
+    <span style="color: #d0d0d0">@SuppressWarnings(</span><span style="color: #ed9d13">&quot;unchecked&quot;</span><span style="color: #d0d0d0">)</span>
+
+    <span style="color: #6ab825; font-weight: bold">public</span> <span style="color: #447fcf">static</span> <span style="color: #d0d0d0">&lt;</span><span style="color: #24909d">T</span><span style="color: #d0d0d0">&gt;</span> <span style="color: #24909d">T</span> <span style="color: #d0d0d0">reduce(</span><span style="color: #24909d">Class</span> <span style="color: #d0d0d0">c</span> <span style="color: #d0d0d0">,</span> <span style="color: #6ab825; font-weight: bold">String</span> <span style="color: #d0d0d0">m</span> <span style="color: #d0d0d0">,</span> <span style="color: #24909d">T</span> <span style="color: #d0d0d0">...</span> <span style="color: #24909d">objects</span>  <span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">{</span>
+        <span style="color: #24909d">for</span> <span style="color: #d0d0d0">(</span> <span style="color: #24909d">Method</span> <span style="color: #d0d0d0">tm</span> <span style="color: #d0d0d0">:c.getDeclaredMethods()</span> <span style="color: #d0d0d0">){</span>
+            <span style="color: #6ab825; font-weight: bold">if</span><span style="color: #d0d0d0">(</span> <span style="color: #d0d0d0">m.equals(tm.getName()</span> <span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">){</span>
+                <span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(tm.getParameterTypes()</span><span style="color: #24909d">.length</span> <span style="color: #d0d0d0">==</span> <span style="color: #3677a9">1</span><span style="color: #d0d0d0">){</span>
+                    <span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(</span> <span style="color: #d0d0d0">tm.getParameterTypes()</span><span style="color: #a61717; background-color: #e3d2d2">[</span><span style="color: #3677a9">0</span><span style="color: #cd2828; font-weight: bold">]</span>.isArray() == true){
+                        tm.setAccessible(true);
+                        try {
+                            T <span style="color: #cd2828; font-weight: bold">[]</span> a = (T<span style="color: #cd2828; font-weight: bold">[]</span>) new Object<span style="color: #cd2828; font-weight: bold">[</span><span style="color: #3677a9">1</span><span style="color: #cd2828; font-weight: bold">]</span>; 
+                            a<span style="color: #cd2828; font-weight: bold">[</span><span style="color: #3677a9">0</span><span style="color: #cd2828; font-weight: bold">]</span> = (T) Arrays.asList(objects).toArray();
+                            return (T) tm.invoke(null, a);
+                        } catch (IllegalArgumentException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        } catch (IllegalAccessException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        } catch (InvocationTargetException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                if ( objects.length ==  tm.getParameterTypes().length ){
+
+                    /*个别参数查找**/
+                    for (int i = 0 ; i<span style="color: #6ab825; font-weight: bold">&lt;tm</span><span style="color: #a61717; background-color: #e3d2d2">.</span><span style="color: #bbbbbb">getParameterTypes</span><span style="color: #a61717; background-color: #e3d2d2">().</span><span style="color: #bbbbbb">length</span><span style="color: #a61717; background-color: #e3d2d2">;</span><span style="color: #bbbbbb">i</span><span style="color: #a61717; background-color: #e3d2d2">++){</span>
+                        <span style="color: #bbbbbb">if</span> <span style="color: #a61717; background-color: #e3d2d2">(</span><span style="color: #bbbbbb">tm</span><span style="color: #a61717; background-color: #e3d2d2">.</span><span style="color: #bbbbbb">getParameterTypes</span><span style="color: #a61717; background-color: #e3d2d2">()</span><span style="color: #cd2828; font-weight: bold">[</span><span style="color: #d0d0d0">i</span><span style="color: #cd2828; font-weight: bold">]</span>
+                            <span style="color: #a61717; background-color: #e3d2d2">.</span><span style="color: #bbbbbb">getSimpleName</span><span style="color: #a61717; background-color: #e3d2d2">().</span><span style="color: #bbbbbb">toLowerCase</span><span style="color: #a61717; background-color: #e3d2d2">().</span><span style="color: #bbbbbb">equals</span><span style="color: #a61717; background-color: #e3d2d2">(</span>
+
+                            <span style="color: #bbbbbb">objects</span><span style="color: #cd2828; font-weight: bold">[</span><span style="color: #d0d0d0">i</span><span style="color: #cd2828; font-weight: bold">]</span><span style="color: #a61717; background-color: #e3d2d2">.</span><span style="color: #bbbbbb">getClass</span><span style="color: #a61717; background-color: #e3d2d2">().</span>
+                            <span style="color: #bbbbbb">getSimpleName</span><span style="color: #a61717; background-color: #e3d2d2">().</span><span style="color: #bbbbbb">toLowerCase</span><span style="color: #a61717; background-color: #e3d2d2">()</span> <span style="color: #a61717; background-color: #e3d2d2">)</span> <span style="color: #a61717; background-color: #e3d2d2">)</span>
+                        <span style="color: #a61717; background-color: #e3d2d2">{</span>
+                            <span style="color: #bbbbbb">tm</span><span style="color: #a61717; background-color: #e3d2d2">.</span><span style="color: #bbbbbb">setAccessible</span><span style="color: #a61717; background-color: #e3d2d2">(</span><span style="color: #bbbbbb">true</span><span style="color: #a61717; background-color: #e3d2d2">);</span>
+                            <span style="color: #bbbbbb">try</span> <span style="color: #a61717; background-color: #e3d2d2">{</span>
+                                <span style="color: #bbbbbb">return</span> <span style="color: #a61717; background-color: #e3d2d2">(</span><span style="color: #bbbbbb">T</span><span style="color: #a61717; background-color: #e3d2d2">)</span> <span style="color: #bbbbbb">tm</span><span style="color: #a61717; background-color: #e3d2d2">.</span><span style="color: #bbbbbb">invoke</span><span style="color: #a61717; background-color: #e3d2d2">(</span><span style="color: #bbbbbb">null</span><span style="color: #a61717; background-color: #e3d2d2">,</span> <span style="color: #bbbbbb">objects</span><span style="color: #a61717; background-color: #e3d2d2">);</span>
+                            <span style="color: #a61717; background-color: #e3d2d2">}</span> <span style="color: #bbbbbb">catch</span> <span style="color: #a61717; background-color: #e3d2d2">(</span><span style="color: #bbbbbb">IllegalArgumentException</span> <span style="color: #bbbbbb">e</span><span style="color: #a61717; background-color: #e3d2d2">)</span> <span style="color: #a61717; background-color: #e3d2d2">{</span>
+                                <span style="color: #a61717; background-color: #e3d2d2">//</span> <span style="color: #bbbbbb">TODO</span> <span style="color: #bbbbbb">Auto-generated</span> <span style="color: #bbbbbb">catch</span> <span style="color: #bbbbbb">block</span>
+                                <span style="color: #bbbbbb">e</span><span style="color: #a61717; background-color: #e3d2d2">.</span><span style="color: #bbbbbb">printStackTrace</span><span style="color: #a61717; background-color: #e3d2d2">();</span>
+                            <span style="color: #a61717; background-color: #e3d2d2">}</span> <span style="color: #bbbbbb">catch</span> <span style="color: #a61717; background-color: #e3d2d2">(</span><span style="color: #bbbbbb">IllegalAccessException</span> <span style="color: #bbbbbb">e</span><span style="color: #a61717; background-color: #e3d2d2">)</span> <span style="color: #a61717; background-color: #e3d2d2">{</span>
+                                <span style="color: #a61717; background-color: #e3d2d2">//</span> <span style="color: #bbbbbb">TODO</span> <span style="color: #bbbbbb">Auto-generated</span> <span style="color: #bbbbbb">catch</span> <span style="color: #bbbbbb">block</span>
+                                <span style="color: #bbbbbb">e</span><span style="color: #a61717; background-color: #e3d2d2">.</span><span style="color: #bbbbbb">printStackTrace</span><span style="color: #a61717; background-color: #e3d2d2">();</span>
+                            <span style="color: #a61717; background-color: #e3d2d2">}</span> <span style="color: #bbbbbb">catch</span> <span style="color: #a61717; background-color: #e3d2d2">(</span><span style="color: #bbbbbb">InvocationTargetException</span> <span style="color: #bbbbbb">e</span><span style="color: #a61717; background-color: #e3d2d2">)</span> <span style="color: #a61717; background-color: #e3d2d2">{</span>
+                                <span style="color: #a61717; background-color: #e3d2d2">//</span> <span style="color: #bbbbbb">TODO</span> <span style="color: #bbbbbb">Auto-generated</span> <span style="color: #bbbbbb">catch</span> <span style="color: #bbbbbb">block</span>
+                                <span style="color: #bbbbbb">e</span><span style="color: #a61717; background-color: #e3d2d2">.</span><span style="color: #bbbbbb">printStackTrace</span><span style="color: #a61717; background-color: #e3d2d2">();</span>
+                            <span style="color: #a61717; background-color: #e3d2d2">}</span>
+                        <span style="color: #a61717; background-color: #e3d2d2">}</span>
+                    <span style="color: #a61717; background-color: #e3d2d2">}</span>
+
+                <span style="color: #a61717; background-color: #e3d2d2">}</span>
+            <span style="color: #a61717; background-color: #e3d2d2">}</span>
+        <span style="color: #a61717; background-color: #e3d2d2">}</span>
+        <span style="color: #bbbbbb">return</span> <span style="color: #bbbbbb">null</span><span style="color: #a61717; background-color: #e3d2d2">;</span>
+    <span style="color: #a61717; background-color: #e3d2d2">}</span>
+<span style="color: #a61717; background-color: #e3d2d2">}</span>
+</pre></div>
+</td></tr></table>
+
+<p>首先一点，上面的类实现的不是非常完美，会在以后的文章中慢慢的重构和优化他。</p>
+<p>因为Math对象中没有add类，那么我们自己建立以个MyMath对象</p>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #d0d0d0">class</span> <span style="color: #d0d0d0">myMath{</span>
+    <span style="color: #d0d0d0">public</span> <span style="color: #6ab825; font-weight: bold">static</span> <span style="color: #d0d0d0">Integer</span> <span style="color: #d0d0d0">add(Integer[]</span> <span style="color: #d0d0d0">is){</span>
+        <span style="color: #d0d0d0">Integer</span> <span style="color: #d0d0d0">result</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">;</span>
+        <span style="color: #6ab825; font-weight: bold">for</span> <span style="color: #d0d0d0">(Integer</span> <span style="color: #d0d0d0">a</span> <span style="color: #d0d0d0">:</span> <span style="color: #d0d0d0">is</span> <span style="color: #d0d0d0">){</span>
+            <span style="color: #d0d0d0">result</span> <span style="color: #d0d0d0">+=</span> <span style="color: #d0d0d0">a;</span>
+        <span style="color: #d0d0d0">}</span>
+        <span style="color: #6ab825; font-weight: bold">return</span> <span style="color: #d0d0d0">result;</span>
+    <span style="color: #d0d0d0">}</span>
+
+<span style="color: #d0d0d0">}</span>
+</pre></div>
+</td></tr></table>
+
+<p>我们的建立一个试验函数吧！！。。激动人心的时刻到了</p>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3
+4</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #24909d">List</span><span style="color: #d0d0d0">&lt;</span><span style="color: #6ab825; font-weight: bold">Integer</span><span style="color: #d0d0d0">&gt;</span> <span style="color: #d0d0d0">x</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">Arrays.asList(</span><span style="color: #3677a9">1</span><span style="color: #d0d0d0">,</span><span style="color: #3677a9">2</span><span style="color: #d0d0d0">,</span><span style="color: #3677a9">3</span><span style="color: #d0d0d0">,</span><span style="color: #3677a9">4</span><span style="color: #d0d0d0">,</span><span style="color: #3677a9">5</span><span style="color: #d0d0d0">,</span><span style="color: #3677a9">6</span><span style="color: #d0d0d0">,</span><span style="color: #3677a9">7</span><span style="color: #d0d0d0">);</span>
+
+<span style="color: #6ab825; font-weight: bold">Integer</span> <span style="color: #d0d0d0">c</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">(</span><span style="color: #6ab825; font-weight: bold">Integer</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">ob.reduce(myMath.class,</span> <span style="color: #ed9d13">&quot;add&quot;</span><span style="color: #d0d0d0">,</span> <span style="color: #d0d0d0">x.toArray());</span>
+<span style="color: #d0d0d0">System.out.println(c);</span>
+</pre></div>
+</td></tr></table>
+
+<p>打印的结果为</p>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #3677a9">28</span>
+</pre></div>
+</td></tr></table>
+
+<p>OY! 我们成功了。</p>
+<p>那么我们建立的reduce函数也支持math中的大部分操作</p>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #6ab825; font-weight: bold">double</span> <span style="color: #d0d0d0">b</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">ob.reduce(Math.class,</span><span style="color: #ed9d13">&quot;max&quot;</span><span style="color: #d0d0d0">,</span><span style="color: #3677a9">1.2</span><span style="color: #d0d0d0">,</span><span style="color: #3677a9">3.2</span><span style="color: #d0d0d0">);</span>
+<span style="color: #d0d0d0">System.out.println(b);</span>
+
+<span style="color: #d0d0d0">Double</span> <span style="color: #d0d0d0">a</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">ob.reduce(Math.class,</span><span style="color: #ed9d13">&quot;abs&quot;</span><span style="color: #d0d0d0">,-</span><span style="color: #3677a9">2.2</span><span style="color: #d0d0d0">);</span>
+<span style="color: #d0d0d0">System.out.println(a);</span>
+</pre></div>
+</td></tr></table>
+
+<p>例子代码如上。分别会打印出来 3.2和 2.2</p>
+<p>这样看起来我们的java程序是不是更加函数化了呢？当然对于xrange和range很好实现，这里就不给出现了。</p>
+<p>以下是使用range或者xrange的样例代码。</p>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #d0d0d0">Integer</span> <span style="color: #d0d0d0">c</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">(Integer)</span> <span style="color: #d0d0d0">ob.reduce(myMath.class,</span> <span style="color: #ed9d13">&quot;add&quot;</span><span style="color: #d0d0d0">,</span> <span style="color: #d0d0d0">range(</span><span style="color: #3677a9">1</span><span style="color: #d0d0d0">,</span><span style="color: #3677a9">7</span><span style="color: #d0d0d0">);</span>
+</pre></div>
+</td></tr></table>
+
+<p>是不是有点函数式编程的味道了？</p>
+<p>哈哈</p>
+
+<a href="http:/ttch.github.com">回到首页</a>
+</body>
+</html>
+<!-- css from http://kevinburke.bitbucket.org/markdowncss/ -->
+

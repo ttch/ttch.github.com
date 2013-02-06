@@ -4,7 +4,6 @@
 <title>表达式是对象吗</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href="../static/css/render.css" rel="stylesheet" type="text/css" />
-<link href="../static/css/hi.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <h1>表达式是对象吗<h1>
@@ -16,12 +15,12 @@
 <blockquote>
 <p>关于<code>有资格</code>是这句话的翻译的译注 ：整篇文章认为在近期可以认为他是一个对象，但也可以认为他不是一个对象，或者可以另外建立以个特殊的标识</p>
 </blockquote>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre>Runnable r = () -&gt; {};   // creates a lambda expression and assigns a reference to this lambda to r
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #d0d0d0">Runnable</span> <span style="color: #d0d0d0">r</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">()</span> <span style="color: #d0d0d0">-&gt;</span> <span style="color: #d0d0d0">{};</span>   <span style="color: #999999; font-style: italic">// creates a lambda expression and assigns a reference to this lambda to r</span>
 </pre></div>
 </td></tr></table>
 
 <p>建立一个lambda表达式并且一个lambda表达式的引用赋值给r。</p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre>Object o = r;            // ordinary widening conversion 普通的拓宽转换
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #d0d0d0">Object</span> <span style="color: #d0d0d0">o</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">r;</span>            <span style="color: #999999; font-style: italic">// ordinary widening conversion 普通的拓宽转换</span>
 </pre></div>
 </td></tr></table>
 
@@ -29,13 +28,13 @@
 <p>理解情况是对于明白原理是非常有用的，其中两个情况在java中，<code>短期目标</code>和<code>长期的里程碑</code>。<code>短期目标</code>是支持集合的内部迭代，为了更有效的利用硬件的并行。<code>长期的里程碑</code>是支持更多的函数式编程这样的趋势。短期目标仅仅是在追赶进度（译者注：Java在函数式编程和当前现代语言差距很大了），但是设计者是担心会危及到在Java中将来的函数式编程，例如像Haskell和Scala中已经包含成熟的函数类型特性。</p>
 <p>The question of whether lambdas are objects must be answered on the basis of how they fit into the Java’s type system, not on how they happen to be implemented at any moment. Their status as objects, which stems from the fundamental decision to make them instances of interfaces, has both positive and negative aspects:</p>
 <p><code>lambdas</code>是否是对象这个问题，答案是根据不同Java基本类型系统，并不是在所有时候都一致对待。他们像对象一样，这个是来自基本策略：把他们做成接口的实例，不过这会引起一个正面和一个负面的情况：</p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
 2
 3
-4</pre></div></td><td class="code"><div class="codehilite"><pre>* it enables lambda expressions to fit into the existing type system with relatively little disturbance;
-在同意lambda表达式生存在已经存在的类型系统,改动相对较小。
-* lambda expressions inherit the methods of Object.
-lambda表达式继承对象中的函数。
+4</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #d0d0d0">*</span> <span style="color: #d0d0d0">it</span> <span style="color: #d0d0d0">enables</span> <span style="color: #d0d0d0">lambda</span> <span style="color: #d0d0d0">expressions</span> <span style="color: #d0d0d0">to</span> <span style="color: #d0d0d0">fit</span> <span style="color: #d0d0d0">into</span> <span style="color: #d0d0d0">the</span> <span style="color: #d0d0d0">existing</span> <span style="color: #d0d0d0">type</span> <span style="color: #d0d0d0">system</span> <span style="color: #d0d0d0">with</span> <span style="color: #d0d0d0">relatively</span> <span style="color: #d0d0d0">little</span> <span style="color: #d0d0d0">disturbance;</span>
+<span style="color: #a61717; background-color: #e3d2d2">在同意</span><span style="color: #d0d0d0">lambda</span><span style="color: #a61717; background-color: #e3d2d2">表达式生存在已经存在的类型系统</span><span style="color: #d0d0d0">,</span><span style="color: #a61717; background-color: #e3d2d2">改动相对较小。</span>
+<span style="color: #d0d0d0">*</span> <span style="color: #d0d0d0">lambda</span> <span style="color: #d0d0d0">expressions</span> <span style="color: #d0d0d0">inherit</span> <span style="color: #d0d0d0">the</span> <span style="color: #d0d0d0">methods</span> <span style="color: #d0d0d0">of</span> <span style="color: #d0d0d0">Object.</span>
+<span style="color: #d0d0d0">lambda</span><span style="color: #a61717; background-color: #e3d2d2">表达式继承对象中的函数。</span>
 </pre></div>
 </td></tr></table>
 
@@ -47,11 +46,11 @@ lambda表达式继承对象中的函数。
 <blockquote>
 <p>关于<code>有资格</code>是这句话的翻译的译注 ：整篇文章认为在近期可以认为他是一个对象，但也可以认为他不是一个对象，或者可以另外建立以个特殊的标识</p>
 </blockquote>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
 2
-3</pre></div></td><td class="code"><div class="codehilite"><pre>Runnable r = () -&gt; {}; //建立一个lambda表达式并且一个lambda表达式的引用赋值给r。
+3</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #d0d0d0">Runnable</span> <span style="color: #d0d0d0">r</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">()</span> <span style="color: #d0d0d0">-&gt;</span> <span style="color: #d0d0d0">{};</span> <span style="color: #999999; font-style: italic">//建立一个lambda表达式并且一个lambda表达式的引用赋值给r。</span>
 
-Object o = r; //普通的拓宽转换
+<span style="color: #d0d0d0">Object</span> <span style="color: #d0d0d0">o</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">r;</span> <span style="color: #999999; font-style: italic">//普通的拓宽转换</span>
 </pre></div>
 </td></tr></table>
 
@@ -66,5 +65,5 @@ Object o = r; //普通的拓宽转换
 <a href="http:/ttch.github.com">回到首页</a>
 </body>
 </html>
-
+<!-- css from http://kevinburke.bitbucket.org/markdowncss/ -->
 

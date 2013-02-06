@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>java趣味短码-for的逻辑操作对比</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="../static/css/render.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>java趣味短码-for的逻辑操作对比<h1>
+<h1>java趣味短码-for的逻辑操作对比</h1>
+<p>前面介绍了三元表达式和三元表达式的用法，当然还有迭代器。下面就是一个比较特殊的问题，for的写法长度比较和优劣。当然这也是一个和童鞋讨论思考了很久的问题。</p>
+<p>首先说明一下里面的做法参考的stackoverflow中的一篇讨论贴子中的<a href="http://stackoverflow.com/questions/8556628/how-do-i-implement-rubys-each-method-in-java/8556644#8556644">关于each的做法</a>。</p>
+<h3>首先我们准备一下相关函数</h3>
+<blockquote>
+<p>建立一个接口，用来实现each操作用的</p>
+</blockquote>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #d0d0d0">interface</span> <span style="color: #d0d0d0">Function&lt;</span><span style="color: #24909d">T</span><span style="color: #d0d0d0">&gt;{</span>
+    <span style="color: #6ab825; font-weight: bold">public</span> <span style="color: #447fcf">void</span> <span style="color: #d0d0d0">func(</span><span style="color: #24909d">T</span> <span style="color: #24909d">Item</span><span style="color: #d0d0d0">);</span>
+<span style="color: #d0d0d0">}</span>
+</pre></div>
+</td></tr></table>
+
+<blockquote>
+<p>实现一个each函数。</p>
+</blockquote>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #d0d0d0">@SuppressWarnings(</span><span style="color: #ed9d13">&quot;unchecked&quot;</span><span style="color: #d0d0d0">)</span>
+<span style="color: #6ab825; font-weight: bold">public</span> <span style="color: #447fcf">static</span> <span style="color: #d0d0d0">&lt;</span><span style="color: #24909d">T</span><span style="color: #d0d0d0">&gt;</span> <span style="color: #24909d">void</span> <span style="color: #24909d">each</span><span style="color: #d0d0d0">(Collection&lt;</span><span style="color: #24909d">T</span><span style="color: #d0d0d0">&gt;</span> <span style="color: #24909d">s</span><span style="color: #d0d0d0">,</span> <span style="color: #d0d0d0">Function</span> <span style="color: #24909d">f</span><span style="color: #d0d0d0">){</span>
+    <span style="color: #24909d">for</span> <span style="color: #d0d0d0">(</span> <span style="color: #24909d">T</span> <span style="color: #d0d0d0">a</span> <span style="color: #d0d0d0">:</span> <span style="color: #24909d">s</span><span style="color: #d0d0d0">){</span>
+        <span style="color: #d0d0d0">f.func(a);</span>
+    <span style="color: #d0d0d0">}</span>
+<span style="color: #d0d0d0">}</span>
+</pre></div>
+</td></tr></table>
+
+<blockquote>
+<p>实现一个集合增加元素的三元表达式逻辑操作函数。</p>
+</blockquote>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #6ab825; font-weight: bold">public</span> <span style="color: #447fcf">static</span> <span style="color: #d0d0d0">&lt;</span><span style="color: #24909d">T</span><span style="color: #d0d0d0">&gt;</span> <span style="color: #d0d0d0">int</span> <span style="color: #d0d0d0">add_(Collection&lt;</span><span style="color: #24909d">T</span><span style="color: #d0d0d0">&gt;</span> <span style="color: #24909d">s</span><span style="color: #d0d0d0">,</span> <span style="color: #24909d">T</span> <span style="color: #24909d">item</span><span style="color: #d0d0d0">){</span>
+    <span style="color: #d0d0d0">s.add(</span><span style="color: #24909d">item</span><span style="color: #d0d0d0">);</span>
+    <span style="color: #6ab825; font-weight: bold">return</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">;</span>
+
+<span style="color: #d0d0d0">}</span>
+</pre></div>
+</td></tr></table>
+
+<blockquote>
+<p>我们的需求如下：</p>
+</blockquote>
+<h3><strong><em>需求1</em></strong>：在指定的List中去掉小于等于2的元素，大于2的元素放到目标列表d中，并打印d中所有的元素，我们只针对过滤元素的程序部分进行优化。</h3>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #24909d">List</span> <span style="color: #d0d0d0">&lt;</span><span style="color: #6ab825; font-weight: bold">Integer</span><span style="color: #d0d0d0">&gt;</span> <span style="color: #d0d0d0">l</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">Arrays.asList(</span><span style="color: #3677a9">1</span><span style="color: #d0d0d0">,</span><span style="color: #3677a9">2</span><span style="color: #d0d0d0">,</span><span style="color: #3677a9">3</span><span style="color: #d0d0d0">,</span><span style="color: #3677a9">4</span><span style="color: #d0d0d0">,</span><span style="color: #3677a9">5</span><span style="color: #d0d0d0">,</span><span style="color: #3677a9">6</span><span style="color: #d0d0d0">,</span><span style="color: #3677a9">7</span><span style="color: #d0d0d0">);</span>
+
+<span style="color: #d0d0d0">final</span> <span style="color: #24909d">List</span> <span style="color: #d0d0d0">&lt;</span><span style="color: #6ab825; font-weight: bold">Integer</span><span style="color: #d0d0d0">&gt;</span> <span style="color: #d0d0d0">d</span> <span style="color: #d0d0d0">=</span> <span style="color: #24909d">new</span> <span style="color: #d0d0d0">ArrayList&lt;</span><span style="color: #6ab825; font-weight: bold">Integer</span><span style="color: #d0d0d0">&gt;();</span>
+
+<span style="color: #24909d">for</span> <span style="color: #d0d0d0">(</span> <span style="color: #6ab825; font-weight: bold">Integer</span> <span style="color: #d0d0d0">a</span> <span style="color: #d0d0d0">:</span> <span style="color: #d0d0d0">l){</span>
+    <span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(a</span> <span style="color: #d0d0d0">&gt;</span> <span style="color: #3677a9">2</span><span style="color: #d0d0d0">){</span> <span style="color: #d0d0d0">d.add(a);</span> <span style="color: #d0d0d0">}</span>
+<span style="color: #d0d0d0">}</span>
+</pre></div>
+</td></tr></table>
+
+<blockquote>
+<p>我们需要优化的代码如下：</p>
+</blockquote>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #6ab825; font-weight: bold">for</span> <span style="color: #d0d0d0">(</span> <span style="color: #d0d0d0">Integer</span> <span style="color: #d0d0d0">a</span> <span style="color: #d0d0d0">:</span> <span style="color: #d0d0d0">l){</span>
+    <span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(a</span> <span style="color: #d0d0d0">&gt;</span> <span style="color: #3677a9">2</span><span style="color: #d0d0d0">){</span> <span style="color: #d0d0d0">d.add(a);</span> <span style="color: #d0d0d0">}</span>
+<span style="color: #d0d0d0">}</span>
+</pre></div>
+</td></tr></table>
+
+<p>下面我们看看，有2种写法：</p>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #999999; font-style: italic">//first</span>
+<span style="color: #d0d0d0">test03.each(l,</span> <span style="color: #6ab825; font-weight: bold">new</span> <span style="color: #d0d0d0">Function&lt;Integer&gt;(){</span> 
+    <span style="color: #d0d0d0">@Override</span>
+    <span style="color: #d0d0d0">public</span> <span style="color: #6ab825; font-weight: bold">void</span> <span style="color: #d0d0d0">func(Integer</span> <span style="color: #d0d0d0">Item)</span> <span style="color: #d0d0d0">{</span> <span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(</span> <span style="color: #d0d0d0">Item</span> <span style="color: #d0d0d0">&gt;</span> <span style="color: #3677a9">2</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">{</span> <span style="color: #d0d0d0">d.add(Item);</span> <span style="color: #d0d0d0">}</span> <span style="color: #d0d0d0">}</span>
+<span style="color: #d0d0d0">});</span>
+</pre></div>
+</td></tr></table>
+
+<p><strong><em>优点</em></strong>：去掉了for，把他封装到了函数里，更专注元素的处理，且逻辑更鲜明，代码行数的可预料性大。</p>
+<p><strong><em>缺点</em></strong>：可扩展的难度十分大，比如需要2个元素对比等，需要开发不同的需求的each版本，不过实际上这个缺点也算是优点，因为会使代码规范化，程序更能公式化。</p>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #6ab825; font-weight: bold">for</span> <span style="color: #d0d0d0">(</span> <span style="color: #d0d0d0">Integer</span> <span style="color: #d0d0d0">a</span> <span style="color: #d0d0d0">:</span> <span style="color: #d0d0d0">l</span> <span style="color: #d0d0d0">){</span> <span style="color: #6ab825; font-weight: bold">int</span> <span style="color: #d0d0d0">b</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">(</span> <span style="color: #d0d0d0">a</span> <span style="color: #d0d0d0">&gt;</span><span style="color: #3677a9">2</span> <span style="color: #d0d0d0">?</span> <span style="color: #d0d0d0">add_(d,a)</span> <span style="color: #d0d0d0">:</span> <span style="color: #3677a9">0</span>  <span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">;</span> <span style="color: #d0d0d0">}</span>
+</pre></div>
+</td></tr></table>
+
+<p><strong><em>优点</em></strong>：仅仅从代码行数和代码文字列数来说，这样写确实精简了。</p>
+<p><strong><em>缺点</em></strong>：几乎不适合作为client-code的典范，不推荐这样写。</p>
+<blockquote>
+<p>总结： 从上面看，如果刚开始就需要对代码进行统计和规范化建议first写法，并且可以开发出来一套这样的函数式框架提供给程序员，代码的统计和代码的规范化更易于预测和思考（因为基本都可以通过公式化的开销来计算）</p>
+</blockquote>
+<h3><strong><em>需求2</em></strong>：在指定的List中 小于等于2的元素增加1并存放在目标列表中，大于2的元素直接放到目标列表中。</h3>
+<p>源代码如下：</p>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #6ab825; font-weight: bold">for</span> <span style="color: #d0d0d0">(</span> <span style="color: #d0d0d0">Integer</span> <span style="color: #d0d0d0">a</span> <span style="color: #d0d0d0">:</span> <span style="color: #d0d0d0">l){</span> <span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(a</span> <span style="color: #d0d0d0">&gt;</span> <span style="color: #3677a9">2</span><span style="color: #d0d0d0">){</span> <span style="color: #d0d0d0">d.add(a);</span> <span style="color: #d0d0d0">}</span> <span style="color: #6ab825; font-weight: bold">else</span> <span style="color: #d0d0d0">{</span> <span style="color: #d0d0d0">d.add(</span> <span style="color: #d0d0d0">a</span> <span style="color: #d0d0d0">+</span> <span style="color: #3677a9">1</span><span style="color: #d0d0d0">);</span> <span style="color: #d0d0d0">}</span> <span style="color: #d0d0d0">}</span>
+</pre></div>
+</td></tr></table>
+
+<blockquote>
+<p>写法 1</p>
+</blockquote>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #999999; font-style: italic">//first</span>
+<span style="color: #d0d0d0">test03.each(l,</span> <span style="color: #6ab825; font-weight: bold">new</span> <span style="color: #d0d0d0">Function&lt;Integer&gt;(){</span> 
+    <span style="color: #d0d0d0">@Override</span>
+    <span style="color: #d0d0d0">public</span> <span style="color: #6ab825; font-weight: bold">void</span> <span style="color: #d0d0d0">func(Integer</span> <span style="color: #40ffff">I</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">{</span>
+        <span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(</span> <span style="color: #40ffff">I</span> <span style="color: #d0d0d0">&gt;</span> <span style="color: #3677a9">2</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">{</span> <span style="color: #d0d0d0">d.add(</span><span style="color: #40ffff">I</span><span style="color: #d0d0d0">);</span> <span style="color: #d0d0d0">}</span> <span style="color: #6ab825; font-weight: bold">else</span> <span style="color: #d0d0d0">{</span> <span style="color: #d0d0d0">d.add(</span><span style="color: #40ffff">I</span><span style="color: #d0d0d0">+</span><span style="color: #3677a9">1</span><span style="color: #d0d0d0">);</span> <span style="color: #d0d0d0">}</span>
+    <span style="color: #d0d0d0">}</span>
+<span style="color: #d0d0d0">});</span>
+</pre></div>
+</td></tr></table>
+
+<p><strong><em>优点</em></strong>：同上。</p>
+<p><strong><em>缺点</em></strong>：同上。</p>
+<p><strong><em>补充</em></strong> : 这时候已经能够凸显<code>固定模式</code>的<code>函数式编程</code>的特点了。</p>
+<blockquote>
+<p>写法2</p>
+</blockquote>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #999999; font-style: italic">//second</span>
+<span style="color: #6ab825; font-weight: bold">for</span> <span style="color: #d0d0d0">(</span> <span style="color: #d0d0d0">Integer</span> <span style="color: #d0d0d0">a</span> <span style="color: #d0d0d0">:</span> <span style="color: #d0d0d0">l</span> <span style="color: #d0d0d0">){</span> <span style="color: #6ab825; font-weight: bold">int</span> <span style="color: #d0d0d0">b=(</span> <span style="color: #d0d0d0">a</span> <span style="color: #d0d0d0">&gt;</span><span style="color: #3677a9">2</span> <span style="color: #d0d0d0">?</span> <span style="color: #d0d0d0">add_(d,a)</span> <span style="color: #d0d0d0">:</span> <span style="color: #d0d0d0">add_(d,a+</span><span style="color: #3677a9">1</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">);</span> <span style="color: #d0d0d0">}</span>
+</pre></div>
+</td></tr></table>
+
+<p><strong><em>优点</em></strong>：比标准写法短了不少！。</p>
+<p><strong><em>缺点</em></strong>：对更多的if elseif else这样的结构，这种写法直接就被pass了，所以经证明这种写法在if else这样的条件结构的时候，还蛮不错。</p>
+<h3><strong><em>总结</em></strong>:</h3>
+<blockquote>
+<p>需求1，不优化是最简洁的，但第1种优化的扩展和模式化编程较好。</p>
+<p>需求2，第2种优化最短，可读性也不错，但扩展性为0</p>
+<p><strong><em>结论</em></strong>：第一种优化确实不错的，在Java中android平台被这种写法是被广泛应用。</p>
+</blockquote>
+
+<a href="http:/ttch.github.com">回到首页</a>
+</body>
+</html>
+<!-- css from http://kevinburke.bitbucket.org/markdowncss/ -->
+

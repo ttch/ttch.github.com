@@ -19,7 +19,12 @@ index_html = u"..\\index.html"
 
 update_list = []
 
-ul = {}
+class topic:
+	def __init__(self,name,hashID):
+		self.name = name
+		self.hashID = hashID
+
+topics = {}
 
 def getFileC(f):
 	r = ""
@@ -42,45 +47,53 @@ class updObj:
 		self.sdpath = sdpath
 		self.fullpath = fullpath
 
-def walk_(path ,sdpath=None):	
+def walk_(path,subpath=None):	
 	for item in os.listdir(path):
 		subpath = os.path.join( path, item )
 		mode = os.stat(subpath)[stat.ST_MODE]
-		#print item
+
 		if stat.S_ISDIR(mode):
 			walk_(subpath,item)
+			if subpath != None:
+				name = item
+				hashID = getHASHID( item.encode("utf-8") )
+				topics[item] = topic(item,hashID )
 		else:
 			fname = os.path.splitext(item)
 			if fname[1] == '.md':
-				o = updObj(( fname[0] ),getHASHID( fname[0].encode("utf-8") ),sdpath,path+"\\"+item)
+				o = updObj(( fname[0] ),getHASHID( fname[0].encode("utf-8") ),subpath,path+"\\"+item)
 				update_list.append( o )
-				ul[sdpath] = ""
-			#	print sdpath
-			#	print subpath
-			#	print fname[1]
-			#	print getHASHID( fname[0].encode("utf-8") )	
+			
 
 def getHASHID( s ):
 	""" get a hash ID , param : s -> is a source string . return : hashString  """
 	return hashlib.sha224( s ).hexdigest()
 
 if __name__ == "__main__":
-	#sys.argv[1]
-	#print getHASHID( sys.argv[1] )
+
+	topics = {}
 	walk_(work_dir)
-	sd_path = {}
+
 
 	writeFileC( reader(getFileC(u".\\_template\index.html").decode("utf-8"),\
 						{
 								"title" : "天天吃好的BLOG".decode("utf-8"),
-								"docs_title" : sd_path,
+								"topics" : topics,
 								"docs_ns" : update_list
 						}	\
 						).encode("utf-8") , index_html )
 	
 	md = markdown.Markdown()
 	for a in update_list:
-		c = markdown.markdown( getFileC(a.fullpath).decode("utf-8"),['codehilite(force_linenos=True,guess_lang=False)'])
+		c = markdown.markdown( getFileC(a.fullpath).decode("utf-8"),\
+		[
+		'codehilite(	\
+		force_linenos=True,	\
+		guess_lang=True,	\
+		css_class=colorful,	\
+		pygments_style=native,	\
+		noclasses=True)'	\
+		])
 		writeFileC (	reader(getFileC(u".\\_template\_post.html").decode("utf-8"),\
 				{
 						"c" : c,

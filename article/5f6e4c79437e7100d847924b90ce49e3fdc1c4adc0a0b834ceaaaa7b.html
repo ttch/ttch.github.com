@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>二叉搜索树的应用和python实现</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="../static/css/render.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>二叉搜索树的应用和python实现<h1>
+<h1>二叉搜索树的应用和python实现</h1>
+<hr />
+<h2>二叉搜索树的应用：</h2>
+<ul>
+<li>给出一段报文和每个字符出现的频率，对其进行haffman编码和解码。</li>
+</ul>
+<p>二叉树的结构：</p>
+<blockquote>
+<p>一个节点包含的内容有：key,value,left,right,parent</p>
+</blockquote>
+<p><em>节点存储定理：</em></p>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #d0d0d0">left.key</span> <span style="color: #d0d0d0">&lt;=</span> <span style="color: #d0d0d0">key</span>
+<span style="color: #d0d0d0">right.key</span> <span style="color: #d0d0d0">&gt;=</span> <span style="color: #d0d0d0">key</span>
+</pre></div>
+</td></tr></table>
+
+<p><strong>定理 1：</strong></p>
+<blockquote>
+<p>如果x是一棵有n个结点子树的根，那么中序遍历x需要O(n)时间。</p>
+</blockquote>
+<p><strong>定理2：</strong></p>
+<blockquote>
+<p>在一棵高度为h的二叉搜索树上，动态集合上的操作 SEARCH,MINIMUM,MAXIMUM,SUCCESSOR和PREDECESSOR可以在O(h)时间内完成。 h为树高。</p>
+</blockquote>
+<p><strong>定理3：</strong></p>
+<blockquote>
+<p>在一棵高度为h的二叉搜索树上,实现动态集合操作 INSERT,DELETE的运行时间均为O(h)。h为树高。</p>
+</blockquote>
+<h2>python实现</h2>
+<p>结点类结构:</p>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #d0d0d0">class</span> <span style="color: #d0d0d0">node:</span>
+    <span style="color: #d0d0d0">def</span> <span style="color: #d0d0d0">node(self,key,val,r=None,l=None,p=None):</span>
+        <span style="color: #d0d0d0">self.l</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">None</span>
+        <span style="color: #d0d0d0">self.r</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">None</span>
+        <span style="color: #d0d0d0">self.key</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">None</span>
+        <span style="color: #d0d0d0">self.val</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">None</span>
+        <span style="color: #d0d0d0">self.p</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">None</span>
+</pre></div>
+</td></tr></table>
+
+<p>建立以个结点：</p>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #d0d0d0">def</span> <span style="color: #d0d0d0">createnode(key,val,r=None,l=None,p=None):</span>
+    <span style="color: #6ab825; font-weight: bold">return</span> <span style="color: #d0d0d0">node(key,val,r,l,p)</span>
+</pre></div>
+</td></tr></table>
+
+<p>插入一个结点(INSERT):</p>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #d0d0d0">def</span> <span style="color: #d0d0d0">put(p,key,val):</span>
+    <span style="color: #d0d0d0">y</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">None</span>
+    <span style="color: #d0d0d0">x</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">p.root</span>
+    <span style="color: #d0d0d0">z</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">createnode(key,val)</span>
+
+    <span style="color: #6ab825; font-weight: bold">while</span> <span style="color: #d0d0d0">x</span> <span style="color: #d0d0d0">!=</span> <span style="color: #d0d0d0">None:</span>
+        <span style="color: #d0d0d0">y</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">x</span>
+        <span style="color: #d0d0d0">x</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">(</span> <span style="color: #d0d0d0">x.l</span> <span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">z.key&lt;x.key</span> <span style="color: #6ab825; font-weight: bold">else</span> <span style="color: #d0d0d0">x.r)</span>
+    <span style="color: #d0d0d0">z.p</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">y</span>
+    <span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">y</span> <span style="color: #d0d0d0">==</span> <span style="color: #d0d0d0">None:</span>
+        <span style="color: #d0d0d0">p.root</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">z</span>
+    <span style="color: #d0d0d0">elif</span> <span style="color: #d0d0d0">z.key</span> <span style="color: #d0d0d0">&lt;</span> <span style="color: #d0d0d0">y.key</span> <span style="color: #d0d0d0">:</span>
+        <span style="color: #d0d0d0">y.l</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">z</span>
+    <span style="color: #d0d0d0">else:</span> <span style="color: #d0d0d0">y.r</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">z</span>
+</pre></div>
+</td></tr></table>
+
+<p>迁移一个结点(transplant)</p>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #d0d0d0">def</span> <span style="color: #d0d0d0">transplant(t,u,v):</span>
+    <span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">u.p</span> <span style="color: #d0d0d0">==</span> <span style="color: #d0d0d0">None:</span>
+        <span style="color: #d0d0d0">t.root</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">p</span>
+    <span style="color: #d0d0d0">elif</span> <span style="color: #d0d0d0">u</span> <span style="color: #d0d0d0">==</span> <span style="color: #d0d0d0">u.p.left:</span>
+        <span style="color: #d0d0d0">u.p.left</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">v</span>
+    <span style="color: #d0d0d0">else:</span> <span style="color: #d0d0d0">u.p.right</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">v</span>
+    <span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">u</span> <span style="color: #d0d0d0">!=</span> <span style="color: #d0d0d0">None:</span>
+        <span style="color: #d0d0d0">v.p</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">u.p</span>
+</pre></div>
+</td></tr></table>
+
+<a href="http:/ttch.github.com">回到首页</a>
+</body>
+</html>
+<!-- css from http://kevinburke.bitbucket.org/markdowncss/ -->
+

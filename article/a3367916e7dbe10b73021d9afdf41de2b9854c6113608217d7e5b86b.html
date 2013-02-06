@@ -4,7 +4,6 @@
 <title>什么是功能性的接口</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href="../static/css/render.css" rel="stylesheet" type="text/css" />
-<link href="../static/css/hi.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <h1>什么是功能性的接口<h1>
@@ -15,13 +14,13 @@
 <p>更精确的，一个<code>函数式接口</code>是恰好被定义成一些接口中的<code>抽象类方法</code> 。（这个限制是必须的，因为一个接口会有继承自Object的<code>非抽象类方法</code>，并且也可以有<code>非抽象默认类方法</code>。）这就是为什么函数式接口被叫做<code>单例抽象类</code>(<code>SAM</code>:<code>Single Abstract Method</code> )接口`，这个术语比较常见。</p>
 <p><strong><em>例子</em></strong></p>
 <p>下面是来自接口来自多个平台库中是函数式接口的定义：</p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
 2
 3
-4</pre></div></td><td class="code"><div class="codehilite"><pre>public interface Runnable { void run(); } 
-public interface Callable&lt;V&gt; { V call() throws Exception; } 
-public interface ActionListener { void actionPerformed(ActionEvent e); } 
-public interface Comparator&lt;T&gt; { int compare(T o1, T o2); boolean equals(Object obj); }
+4</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #6ab825; font-weight: bold">public</span> <span style="color: #447fcf">interface</span> <span style="color: #d0d0d0">Runnable</span> <span style="color: #d0d0d0">{</span> <span style="color: #24909d">void</span> <span style="color: #24909d">run</span><span style="color: #d0d0d0">();</span> <span style="color: #d0d0d0">}</span> 
+<span style="color: #6ab825; font-weight: bold">public</span> <span style="color: #447fcf">interface</span> <span style="color: #d0d0d0">Callable&lt;V&gt;</span> <span style="color: #d0d0d0">{</span> <span style="color: #d0d0d0">V</span> <span style="color: #24909d">call</span><span style="color: #d0d0d0">()</span> <span style="color: #d0d0d0">throws</span> <span style="color: #d0d0d0">Exception;</span> <span style="color: #d0d0d0">}</span> 
+<span style="color: #6ab825; font-weight: bold">public</span> <span style="color: #447fcf">interface</span> <span style="color: #d0d0d0">ActionListener</span> <span style="color: #d0d0d0">{</span> <span style="color: #24909d">void</span> <span style="color: #d0d0d0">actionPerformed(ActionEvent</span> <span style="color: #d0d0d0">e);</span> <span style="color: #d0d0d0">}</span> 
+<span style="color: #6ab825; font-weight: bold">public</span> <span style="color: #447fcf">interface</span> <span style="color: #d0d0d0">Comparator&lt;</span><span style="color: #24909d">T</span><span style="color: #d0d0d0">&gt;</span> <span style="color: #d0d0d0">{</span> <span style="color: #d0d0d0">int</span> <span style="color: #24909d">compare</span><span style="color: #d0d0d0">(</span><span style="color: #24909d">T</span> <span style="color: #d0d0d0">o1,</span> <span style="color: #24909d">T</span> <span style="color: #d0d0d0">o2);</span> <span style="color: #24909d">boolean</span> <span style="color: #6ab825; font-weight: bold">equals</span><span style="color: #d0d0d0">(</span><span style="color: #24909d">Object</span> <span style="color: #d0d0d0">obj);</span> <span style="color: #d0d0d0">}</span>
 </pre></div>
 </td></tr></table>
 
@@ -35,12 +34,12 @@ public interface Comparator&lt;T&gt; { int compare(T o1, T o2); boolean equals(O
 </li>
 </ul>
 <p>是说的<code>覆盖等价</code>。如果一个接口包含覆盖等价的类方法的多个父接口，这个功能的描述为这个接口定义像一个能覆盖所有被继承的抽象类方法的一个类方法。在这个例子中，如果</p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre>interface Foo extends Foo1, Foo2 {}
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #d0d0d0">interface</span> <span style="color: #d0d0d0">Foo</span> <span style="color: #d0d0d0">extends</span> <span style="color: #d0d0d0">Foo1,</span> <span style="color: #d0d0d0">Foo2</span> <span style="color: #d0d0d0">{}</span>
 </pre></div>
 </td></tr></table>
 
 <p>那么foo的功能描述是</p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre>void bar(List arg);
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #6ab825; font-weight: bold">void</span> <span style="color: #447fcf">bar</span><span style="color: #d0d0d0">(List</span> <span style="color: #d0d0d0">arg);</span>
 </pre></div>
 </td></tr></table>
 
@@ -49,5 +48,5 @@ public interface Comparator&lt;T&gt; { int compare(T o1, T o2); boolean equals(O
 <a href="http:/ttch.github.com">回到首页</a>
 </body>
 </html>
-
+<!-- css from http://kevinburke.bitbucket.org/markdowncss/ -->
 

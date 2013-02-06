@@ -1,0 +1,250 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>Java趣味短码 - (第一节)</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="../static/css/render.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>Java趣味短码 - (第一节)<h1>
+<h1>Java趣味短码 - (第一节)</h1>
+<p>今天跟公司的童鞋聊天的时候，谈到了关于短码和代码的精简的方式，所以整理出来。</p>
+<p>需求很简单。</p>
+<p>首先定义一个类</p>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #d0d0d0">class</span> <span style="color: #d0d0d0">Item{</span>
+    <span style="color: #d0d0d0">public</span> <span style="color: #6ab825; font-weight: bold">int</span> <span style="color: #d0d0d0">key;</span>
+    <span style="color: #d0d0d0">public</span> <span style="color: #6ab825; font-weight: bold">int</span> <span style="color: #d0d0d0">l;</span>
+    <span style="color: #d0d0d0">public</span> <span style="color: #6ab825; font-weight: bold">int</span> <span style="color: #d0d0d0">r;</span>
+<span style="color: #d0d0d0">};</span>
+</pre></div>
+</td></tr></table>
+
+<p>然后主函数的场景大概是这样</p>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #d0d0d0">public</span> <span style="color: #6ab825; font-weight: bold">static</span> <span style="color: #6ab825; font-weight: bold">void</span> <span style="color: #447fcf">main</span><span style="color: #d0d0d0">(String[]</span> <span style="color: #d0d0d0">args)</span> <span style="color: #d0d0d0">{</span>
+    <span style="color: #d0d0d0">Item</span> <span style="color: #d0d0d0">x;</span>
+    <span style="color: #d0d0d0">x</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">new</span> <span style="color: #d0d0d0">Item();</span>
+    <span style="color: #d0d0d0">x.key</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">1</span><span style="color: #d0d0d0">;</span>
+    <span style="color: #d0d0d0">x.l</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">10</span><span style="color: #d0d0d0">;</span>
+    <span style="color: #d0d0d0">x.r</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">20</span><span style="color: #d0d0d0">;</span>
+
+    <span style="color: #6ab825; font-weight: bold">int</span> <span style="color: #d0d0d0">i</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">;</span>
+
+    <span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(x.key</span> <span style="color: #d0d0d0">&gt;</span> <span style="color: #d0d0d0">i){</span>
+        <span style="color: #d0d0d0">i</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">x.l;</span>
+    <span style="color: #d0d0d0">}</span><span style="color: #6ab825; font-weight: bold">else</span><span style="color: #d0d0d0">{</span>
+        <span style="color: #d0d0d0">i</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">x.r;</span>
+    <span style="color: #d0d0d0">}</span>
+
+    <span style="color: #d0d0d0">i</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">0</span><span style="color: #a61717; background-color: #e3d2d2">；</span>
+    <span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(</span> <span style="color: #d0d0d0">x.key</span> <span style="color: #d0d0d0">&gt;</span> <span style="color: #d0d0d0">i){</span>
+        <span style="color: #d0d0d0">x.l</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">i;</span>
+    <span style="color: #d0d0d0">}</span><span style="color: #6ab825; font-weight: bold">else</span><span style="color: #d0d0d0">{</span>
+        <span style="color: #d0d0d0">x.r</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">i;</span>
+    <span style="color: #d0d0d0">}</span>
+<span style="color: #d0d0d0">}</span>
+</pre></div>
+</td></tr></table>
+
+<p>这里面有两个子场景，就是接下来要讨论的。</p>
+<p>子场景1</p>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%">    <span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(x.key</span> <span style="color: #d0d0d0">&gt;</span> <span style="color: #d0d0d0">i){</span>
+        <span style="color: #d0d0d0">i</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">x.l;</span>
+    <span style="color: #d0d0d0">}</span><span style="color: #6ab825; font-weight: bold">else</span><span style="color: #d0d0d0">{</span>
+        <span style="color: #d0d0d0">i</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">x.r;</span>
+    <span style="color: #d0d0d0">}</span>
+</pre></div>
+</td></tr></table>
+
+<p>子场景2</p>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%">    <span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(</span> <span style="color: #d0d0d0">x.key</span> <span style="color: #d0d0d0">&gt;</span> <span style="color: #d0d0d0">i){</span>
+        <span style="color: #d0d0d0">x.l</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">i;</span>
+    <span style="color: #d0d0d0">}</span><span style="color: #6ab825; font-weight: bold">else</span><span style="color: #d0d0d0">{</span>
+        <span style="color: #d0d0d0">x.r</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">i;</span>
+    <span style="color: #d0d0d0">}</span>
+</pre></div>
+</td></tr></table>
+
+<ul>
+<li>
+<p>子场景1 的规律是 左面的值都是一样的，都是赋值给i</p>
+</li>
+<li>
+<p>子场景2 的规律是 右面的值都是一样的，都是用i赋给别的变量。</p>
+</li>
+</ul>
+<blockquote>
+<p>那么我们如何来简化实现这两类场景呢？</p>
+</blockquote>
+<p>第一个场景很简单，可以如下优化：</p>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #d0d0d0">i</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">(</span> <span style="color: #d0d0d0">x.key</span> <span style="color: #d0d0d0">&gt;i</span> <span style="color: #d0d0d0">?</span> <span style="color: #d0d0d0">x.l</span> <span style="color: #d0d0d0">:</span> <span style="color: #d0d0d0">x.r);</span>
+</pre></div>
+</td></tr></table>
+
+<p>第二个场景比较棘手！</p>
+<p>因为表达式不能被赋值。</p>
+<p>所以我们增加一个函数：</p>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #d0d0d0">public</span> <span style="color: #6ab825; font-weight: bold">static</span>  <span style="color: #d0d0d0">boolean</span> <span style="color: #447fcf">to_</span><span style="color: #d0d0d0">(Object</span> <span style="color: #d0d0d0">s</span> <span style="color: #d0d0d0">){</span>
+    <span style="color: #6ab825; font-weight: bold">return</span> <span style="color: #24909d">true</span><span style="color: #d0d0d0">;</span>
+<span style="color: #d0d0d0">}</span>
+</pre></div>
+</td></tr></table>
+
+<p>有了如上函数我们就可以这样写</p>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #d0d0d0">(</span> <span style="color: #d0d0d0">x.key</span> <span style="color: #d0d0d0">&gt;i</span> <span style="color: #d0d0d0">?</span> <span style="color: #d0d0d0">to_(</span> <span style="color: #d0d0d0">x.l</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">i</span> <span style="color: #d0d0d0">):</span> <span style="color: #d0d0d0">to_(x.r</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">i)</span> <span style="color: #d0d0d0">)</span>
+</pre></div>
+</td></tr></table>
+
+<p>这里的含义就是先复制给x.l或者x.r根据x.key&gt;i的真假值。然后传给to_函数，至于to_不会考虑传过来的值是多少。反正x.key&gt;i都会判断。直接暴力返回true。这样就完美的解决了左赋值的问题。也解决了Integer和int无法passbyValue的问题。</p>
+<p>如下是完整的代码。</p>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #d0d0d0">package</span> <span style="color: #d0d0d0">tPackge;</span>
+
+<span style="color: #d0d0d0">class</span> <span style="color: #d0d0d0">Item{</span>
+    <span style="color: #d0d0d0">public</span> <span style="color: #d0d0d0">Integer</span> <span style="color: #d0d0d0">key;</span>
+    <span style="color: #d0d0d0">public</span> <span style="color: #d0d0d0">Integer</span> <span style="color: #d0d0d0">l;</span>
+    <span style="color: #d0d0d0">public</span> <span style="color: #d0d0d0">Integer</span> <span style="color: #d0d0d0">r;</span>
+<span style="color: #d0d0d0">};</span>
+
+<span style="color: #d0d0d0">public</span> <span style="color: #d0d0d0">class</span> <span style="color: #d0d0d0">test01</span> <span style="color: #d0d0d0">{</span>
+    <span style="color: #d0d0d0">public</span> <span style="color: #6ab825; font-weight: bold">static</span>  <span style="color: #d0d0d0">boolean</span> <span style="color: #d0d0d0">to_(Object</span> <span style="color: #d0d0d0">s</span> <span style="color: #d0d0d0">){</span>
+        <span style="color: #6ab825; font-weight: bold">return</span> <span style="color: #24909d">true</span><span style="color: #d0d0d0">;</span>
+    <span style="color: #d0d0d0">}</span>
+    <span style="color: #999999; font-style: italic">/**</span>
+<span style="color: #999999; font-style: italic">     * @param args</span>
+<span style="color: #999999; font-style: italic">     */</span>
+    <span style="color: #d0d0d0">public</span> <span style="color: #6ab825; font-weight: bold">static</span> <span style="color: #6ab825; font-weight: bold">void</span> <span style="color: #d0d0d0">main(String[]</span> <span style="color: #d0d0d0">args)</span> <span style="color: #d0d0d0">{</span>
+        <span style="color: #d0d0d0">Item</span> <span style="color: #d0d0d0">x;</span>
+        <span style="color: #d0d0d0">x</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">new</span> <span style="color: #d0d0d0">Item();</span>
+        <span style="color: #d0d0d0">x.key</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">1</span><span style="color: #d0d0d0">;</span>
+        <span style="color: #d0d0d0">x.l</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">10</span><span style="color: #d0d0d0">;</span>
+        <span style="color: #d0d0d0">x.r</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">20</span><span style="color: #d0d0d0">;</span>
+
+        <span style="color: #d0d0d0">Integer</span> <span style="color: #d0d0d0">i</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">;</span>
+
+        <span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(x.key</span> <span style="color: #d0d0d0">&gt;</span> <span style="color: #d0d0d0">i){</span>
+            <span style="color: #d0d0d0">i</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">x.l;</span>
+        <span style="color: #d0d0d0">}</span><span style="color: #6ab825; font-weight: bold">else</span><span style="color: #d0d0d0">{</span>
+            <span style="color: #d0d0d0">i</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">x.r;</span>
+        <span style="color: #d0d0d0">}</span>
+        <span style="color: #d0d0d0">System.out.println(x.l);</span>
+        <span style="color: #d0d0d0">System.out.println(x.r);</span>
+        <span style="color: #d0d0d0">System.out.println(i);</span>
+        <span style="color: #d0d0d0">System.out.println(</span><span style="color: #ed9d13">&quot;--------------------------&quot;</span><span style="color: #d0d0d0">);</span>       
+        <span style="color: #d0d0d0">i</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">(</span> <span style="color: #d0d0d0">x.key</span> <span style="color: #d0d0d0">&gt;i</span> <span style="color: #d0d0d0">?</span> <span style="color: #d0d0d0">x.l</span> <span style="color: #d0d0d0">:</span> <span style="color: #d0d0d0">x.r);</span>
+        <span style="color: #d0d0d0">System.out.println(x.l);</span>
+        <span style="color: #d0d0d0">System.out.println(x.r);</span>
+        <span style="color: #d0d0d0">System.out.println(i);</span>
+        <span style="color: #999999; font-style: italic">/*</span>
+<span style="color: #999999; font-style: italic">        if ( x.key &gt; i){</span>
+<span style="color: #999999; font-style: italic">            x.l = i;</span>
+<span style="color: #999999; font-style: italic">        }else{</span>
+<span style="color: #999999; font-style: italic">            x.r = i;</span>
+<span style="color: #999999; font-style: italic">        }</span>
+<span style="color: #999999; font-style: italic">        */</span>
+        <span style="color: #d0d0d0">System.out.println(</span><span style="color: #ed9d13">&quot;--------------------------&quot;</span><span style="color: #d0d0d0">);</span>
+        <span style="color: #d0d0d0">i</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">;</span>
+        <span style="color: #999999; font-style: italic">//if ( x.key &gt; i ) { x.l = i; } else { x.r = i; }</span>
+
+        <span style="color: #999999; font-style: italic">//if ( ( x.key &gt;i ? ( ( x.l = i ) == i ): ( (x.r = i) == i ) ) ){ System.out.println(i); }</span>
+        <span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(</span> <span style="color: #d0d0d0">(</span> <span style="color: #d0d0d0">x.key</span> <span style="color: #d0d0d0">&gt;i</span> <span style="color: #d0d0d0">?</span> <span style="color: #d0d0d0">to_(</span> <span style="color: #d0d0d0">x.l</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">i</span> <span style="color: #d0d0d0">):</span> <span style="color: #d0d0d0">to_</span> <span style="color: #d0d0d0">(x.r</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">i)</span> <span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">){</span> <span style="color: #d0d0d0">System.out.println(i);</span> <span style="color: #d0d0d0">}</span>
+        <span style="color: #d0d0d0">System.out.println(x.l);</span>
+        <span style="color: #d0d0d0">System.out.println(x.r);</span>
+    <span style="color: #d0d0d0">}</span>
+
+<span style="color: #d0d0d0">}</span>
+</pre></div>
+</td></tr></table>
+
+<a href="http:/ttch.github.com">回到首页</a>
+</body>
+</html>
+<!-- css from http://kevinburke.bitbucket.org/markdowncss/ -->
+
