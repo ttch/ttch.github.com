@@ -54,13 +54,14 @@ if __name__ == "__main__":
 	walk_(work_dir)
 
 	# write index.html
+
 	utils.writeFileC(	\
 		utils.reader	\
 		(utils.getFileC(u".\\_template\\index.html").decode("utf-8"),\
 		{
 			"title" : "天天吃好的BLOG".decode("utf-8"),
 			"topics" : topics,
-			"docs_ns" : update_list
+			"docs_ns" : update_list[:10]
 		}	\
 		).encode("utf-8") , index_html )
 	
@@ -74,7 +75,8 @@ if __name__ == "__main__":
 				"topics" : topics,
 				"docs_ns" : [ i for i in update_list if i.sdpath == topics[x].name]
 			}	\
-			).encode("utf-8") , "..\\topics\\"+topics[x].hashID+".html" )  
+			).encode("utf-8") , "..\\topics\\"+topics[x].hashID+".html" )
+	
 	# write _post.html
 	md = markdown.Markdown()
 	for a in update_list:
