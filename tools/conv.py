@@ -26,13 +26,13 @@ update_list = []
 topics = {}
 
 
-def walk_(path,subpath=None):	
+def walk_(path,subpath=None,tpname=None):	
 	for item in os.listdir(path):
 		subpath = os.path.join( path, item )
 		mode = os.stat(subpath)[stat.ST_MODE]
 		dtime = utils.stampToTime( os.stat(subpath)[stat.ST_CTIME] )
 		if stat.S_ISDIR(mode):
-			walk_(subpath,item)
+			walk_(subpath , item , item )
 			if subpath != None:
 				name = item
 				hashID = getHASHID( item.encode("utf-8") )
@@ -40,7 +40,7 @@ def walk_(path,subpath=None):
 		else:
 			fname = os.path.splitext(item)
 			if fname[1] == '.md':
-				o = updObj(( fname[0] ),getHASHID( fname[0].encode("utf-8") ),subpath,path+"\\"+item,dtime)
+				o = updObj(( fname[0] ),getHASHID( fname[0].encode("utf-8") ),tpname,path+"\\"+item,dtime)
 				update_list.append( o )
 				#print os.stat(item.encode("utf-8"))
 
@@ -51,7 +51,6 @@ def getHASHID( s ):
 
 if __name__ == "__main__":
 
-	topics = {}
 	walk_(work_dir)
 
 	# write index.html
@@ -73,7 +72,7 @@ if __name__ == "__main__":
 			{
 				"title" : topics[x].name,
 				"topics" : topics,
-				"docs_ns" : update_list
+				"docs_ns" : [ i for i in update_list if i.sdpath == topics[x].name]
 			}	\
 			).encode("utf-8") , "..\\topics\\"+topics[x].hashID+".html" )  
 	# write _post.html
