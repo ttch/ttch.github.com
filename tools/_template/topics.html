@@ -5,36 +5,75 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href="../static/css/render.css" rel="stylesheet" type="text/css" />
 <style>
+
+div#main_wrapper{
+    min-width:600px; max-width:1100px;
+    /*超过最大宽度时，居中布局*/
+    margin:0 auto;
+    /*背景图片默认从左上角开始拼接*/
+}
+
+
 header {
     padding:5px 10px;
 	max-width:950px;
 }
-nav { 
-	max-width:950px;
+nav {
+	float:right;
+	max-width:200px;
+	max-height:100%;
     padding:20px 0;
 }
+
+article {
+    width:auto;
+    margin-left:50px;
+    /*在流动居中的栏右侧腾出空间*/
+    margin-right:210px;
+    padding:px 0;
+}
+
+hr {
+    height: 0.2em;
+    border: 0;
+    color: #CCCCCC;
+    background-color: #CCCCCC;
+}
+
 </style>
+
 </head>
 <body>
+
+
 <div>
 <header>
 <h1>{{title}}</h1>
 
 </header>
+<hr>
+</header>
 	<nav>
-	<p>
-		<a href = "../">主页</a>  &nbsp;&nbsp;&nbsp;
-		{% for item in topics %} <a href = "../topics/{{topics[item].hashID}}.html"> {{item}} </a> &nbsp;&nbsp;&nbsp; {% endfor %}
-	</p>
+	<ul>
+		<li>
+		<a href = "../">主页</a>
+		</li>
+		{% for item in topics %}
+			<li>
+			<a href = "../topics/{{topics[item].hashID}}.html"> {{item}} </a> 
+			</li>
+		{% endfor %}
+	</ul>
 	</nav>
 
-<h2>最近更新 - {{date}}<h2>
-
+<article>
 <ul>
 {% for item in docs_ns %}
 	<li><a href="../article/{{item.hashID}}.html">{{item.name}}</a>   <br>更新日期:{{item.dtime}}</li>
 {% endfor %}
 </ul>
+</article>
+
 </div>
 </body>
 </html>
