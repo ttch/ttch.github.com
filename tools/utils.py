@@ -10,6 +10,7 @@ def getFileC(f):
 		r += x
 	return r
 def writeFileC(c,f):
+	print f
 	wf = open(f,"w")
 	wf.write(c)
 	wf.close()
