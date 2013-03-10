@@ -47,54 +47,51 @@ def walk_(path,subpath=None,tpname=None):
 
 def getHASHID( s ):
 	""" get a hash ID , param : s -> is a source string . return : hashString  """
-	return hashlib.sha224( s ).hexdigest()
+	return hashlib.sha224( s ).hexdigest()	
 
 if __name__ == "__main__":
 
 	walk_(work_dir)
 
 	# write index.html
-
-	utils.writeFileC(	\
-		utils.reader	\
-		(utils.getFileC(u"./_template/index.html").decode("utf-8"),\
+	# count post of topics
+	for x in topics:
+		topics[x].count = len([ i for i in update_list if i.sdpath == topics[x].name])
+	
+	utils.writeFileC(
+		utils.reader(utils.getFileC(u"./_template/index.html").decode("utf-8"),
 		{
 			"title" : "天天吃好的BLOG".decode("utf-8"),
 			"topics" : topics,
 			"docs_ns" : update_list[:10]
-		}	\
+		}
 		).encode("utf-8") , index_html )
 	
 	#to-do write topic.html
 	for x in topics:
-		utils.writeFileC(	\
-			utils.reader	\
-			(utils.getFileC(u"./_template/topics.html").decode("utf-8"),\
-			{
-				"title" : topics[x].name,
-				"topics" : topics,
-				"docs_ns" : [ i for i in update_list if i.sdpath == topics[x].name]
-			}	\
-			).encode("utf-8") , "../topics/"+topics[x].hashID+".html" )
+		utils.writeFileC(
+			utils.reader(
+				utils.getFileC(u"./_template/topics.html").decode("utf-8"),
+				{
+					"title" : topics[x].name,
+					"topics" : topics,
+					"docs_ns" : [ i for i in update_list if i.sdpath == topics[x].name]
+				}).encode("utf-8")
+			,"../topics/"+topics[x].hashID+".html" )
 	
 	# write _post.html
 	md = markdown.Markdown()
 	for a in update_list:
-		c = markdown.markdown(	\
-		utils.getFileC(a.fullpath).decode("utf-8"),[
-			'codehilite(	\
-			force_linenos=True,	\
-			guess_lang=True,	\
-			css_class=colorful,	\
-			pygments_style=native,	\
-			noclasses=True)'	\
-		])
+		c = markdown.markdown(
+			utils.getFileC(a.fullpath).decode("utf-8"),
+			[ 'codehilite( force_linenos=True,guess_lang=True,css_class=colorful,pygments_style=native,noclasses=True)'])
 
-		utils.writeFileC (	utils.reader(	\
-				utils.getFileC(u"./_template/_post.html").decode("utf-8"),\
-				{
-						"c" : c,
-						"title" : a.name
-				}).encode("utf-8")	\
-				,"../article/"+a.hashID+".html" )
+		utils.writeFileC (
+					utils.reader(utils.getFileC( u"./_template/_post.html").decode("utf-8"),
+					{
+							"c" : c,
+							"title" : a.name
+					}).encode("utf-8") ,
+					
+					"../article/"+a.hashID+".html")
 
