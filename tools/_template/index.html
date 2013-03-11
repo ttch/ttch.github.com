@@ -3,7 +3,7 @@
 <head>
 <title>{{title}}</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link href="./static/css/render.css" rel="stylesheet" type="text/css" />
+<link href="./static/css/site.css" rel="stylesheet" type="text/css" />
 <style>
 
 div#main_wrapper{
@@ -22,12 +22,12 @@ nav {
 	float:right;
 	max-width:200px;
 	max-height:100%;
-    padding:20px 0;
+    padding:0px 0;
 }
 
 article {
     width:auto;
-    margin-left:50px;
+    margin-left:0px;
     /*在流动居中的栏右侧腾出空间*/
     margin-right:210px;
     padding:px 0;
@@ -53,17 +53,34 @@ hr {
 		
 		{% for item in topics %}
 			<li>
+			<h4>
 			<a href = "./topics/{{topics[item].hashID}}.html"> {{item}}({{topics[item].count}}) </a> 
+			</h4>
 			</li>
 		{% endfor %}
 	</ul>
 	</nav>
 <article>
-	<h2>最近更新 - {{date}}<h2>
-
 	<ul>
 	{% for item in docs_ns %}
-		<li><a href="./article/{{item.hashID}}.html">{{item.name}}</a>   <br>更新日期:{{item.dtime}}</li>
+			<h4>
+		<li><a title="{{item.name}}" href="./article/{{item.hashID}}.html">{{item.name}}</a>
+		</h4>
+				 <div class="clearfix">
+        <div class="published">{{item.dtime}}</div>
+        <div class="tags">
+          标签: 
+          无
+		  <!--
+          <a class="tag" href="/tags/feedback"><span>feedback</span></a>, 
+          
+          <a class="tag" href="/tags/thanks"><span>thanks</span></a>, 
+          
+          <a class="tag" href="/tags/python"><span>python</span></a>, 
+          
+          <a class="tag" href="/tags/community"><span>community</span></a>
+          -->
+        </div>
 	{% endfor %}
 	</ul>
 </article>
