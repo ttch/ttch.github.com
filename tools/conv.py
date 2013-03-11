@@ -11,7 +11,7 @@ import markdown
 import utils
 from _topic import topic
 from _updobj import updObj
-
+import _updobj
 work_dir = u"../posts"
 index_html = u"../index.html"
 
@@ -30,7 +30,7 @@ def walk_(path,subpath=None,tpname=None):
 	for item in os.listdir(path):
 		subpath = os.path.join( path, item )
 		mode = os.stat(subpath)[stat.ST_MODE]
-		dtime = utils.stampToTime( os.stat(subpath)[stat.ST_CTIME] )
+		dtime = utils.stampToTime( os.stat(subpath)[stat.ST_MTIME] )
 		if stat.S_ISDIR(mode):
 			walk_(subpath , item , item )
 			if subpath != None:
@@ -52,7 +52,12 @@ def getHASHID( s ):
 if __name__ == "__main__":
 
 	walk_(work_dir)
-
+	for x in update_list:
+		print x.dtime
+	print '----------------------'
+	update_list = _updobj.isort(update_list)
+	for x in update_list:
+		print x.dtime
 	# write index.html
 	# count post of topics
 	for x in topics:
