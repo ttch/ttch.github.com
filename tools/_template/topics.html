@@ -3,7 +3,7 @@
 <head>
 <title>{{title}}</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link href="../static/css/render.css" rel="stylesheet" type="text/css" />
+<link href="./static/css/site.css" rel="stylesheet" type="text/css" />
 <style>
 
 div#main_wrapper{
@@ -22,14 +22,14 @@ nav {
 	float:right;
 	max-width:200px;
 	max-height:100%;
-    padding:20px 0;
+    padding:0px 0;
 }
 
 article {
     width:auto;
-    margin-left:50px;
+    margin-left:0px;
     /*在流动居中的栏右侧腾出空间*/
-    margin-right:210px;
+    margin-right:300px;
     padding:px 0;
 }
 
@@ -49,29 +49,52 @@ hr {
 <div>
 <header>
 <h1>{{title}}</h1>
-
 </header>
-<hr>
+
 </header>
 	<nav>
 	<ul>
+		<h4>
 		<li>
 		<a href = "../">主页</a>
 		</li>
+		</h4>
+
+
 		{% for item in topics %}
+			<h4>
 			<li>
 			<a href = "../topics/{{topics[item].hashID}}.html"> {{item}} </a> 
 			</li>
+			</h4>
 		{% endfor %}
+
 	</ul>
 	</nav>
 
 <article>
-<ul>
-{% for item in docs_ns %}
-	<li><a href="../article/{{item.hashID}}.html">{{item.name}}</a>   <br>更新日期:{{item.dtime}}</li>
-{% endfor %}
-</ul>
+	<ul>
+	{% for item in docs_ns %}
+			<h4>
+		<li><a title="{{item.name}}" href="./article/{{item.hashID}}.html">{{item.name}}</a>
+		</h4>
+				 <div class="clearfix">
+        <div class="published">{{item.dtime}}</div>
+        <div class="tags">
+          标签: 
+          无
+		  <!--
+          <a class="tag" href="/tags/feedback"><span>feedback</span></a>, 
+          
+          <a class="tag" href="/tags/thanks"><span>thanks</span></a>, 
+          
+          <a class="tag" href="/tags/python"><span>python</span></a>, 
+          
+          <a class="tag" href="/tags/community"><span>community</span></a>
+          -->
+        </div>
+	{% endfor %}
+	</ul>
 </article>
 
 </div>
