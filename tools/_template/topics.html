@@ -64,7 +64,7 @@ hr {
 		{% for item in topics %}
 			<h4>
 			<li>
-			<a href = "../topics/{{topics[item].hashID}}.html"> {{item}} </a> 
+			<a href = "../topics/{{topics[item].hashID}}.html"> {{item}} ({{topics[item].count}}) </a> 
 			</li>
 			</h4>
 		{% endfor %}
