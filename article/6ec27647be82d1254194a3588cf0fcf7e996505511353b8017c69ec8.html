@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>antlr的+_*_?在yacc中都是什么样的模式？</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="../static/css/render.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>antlr的+_*_?在yacc中都是什么样的模式？<h1>
+<h1>Antlr的+ * ?在yacc中都是什么样的模式？</h1>
+<p>因为正在完成的编译器 breed 需要把java项目转换到上面，所以需要对 Antlr的三种符号进行模式转换。</p>
+<p>我们先看一下三种符号的作用</p>
+<ul>
+<li>( + ) 至少出现一次，至多不限制。</li>
+<li>( * ) 可能出现，也可能不出现。</li>
+<li>( ? ) 最多出现一次，也可能不出现。</li>
+</ul>
+<p>就上面的三种种情况 看看yacc中怎么描述。</p>
+<blockquote>
+<p>+</p>
+</blockquote>
+<p>Antlr</p>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #d0d0d0">annotations</span> <span style="color: #d0d0d0">:</span> <span style="color: #d0d0d0">(annotation)+</span> <span style="color: #d0d0d0">;</span>
+</pre></div>
+</td></tr></table>
+
+<p>yacc</p>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #d0d0d0">annotations</span> <span style="color: #d0d0d0">:</span> <span style="color: #d0d0d0">annotation</span>
+            <span style="color: #d0d0d0">|</span> <span style="color: #d0d0d0">annotations</span> <span style="color: #d0d0d0">annotation</span>
+            <span style="color: #d0d0d0">;</span>
+</pre></div>
+</td></tr></table>
+
+<blockquote>
+<p>*</p>
+</blockquote>
+<p>Antlr</p>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #d0d0d0">annotationName</span> <span style="color: #d0d0d0">:</span> <span style="color: #d0d0d0">ID</span> <span style="color: #d0d0d0">(</span><span style="color: #ed9d13">&#39;.&#39;</span> <span style="color: #d0d0d0">ID)*</span> <span style="color: #d0d0d0">;</span>
+</pre></div>
+</td></tr></table>
+
+<p>yacc</p>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3
+4</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #d0d0d0">annotationName</span> <span style="color: #d0d0d0">:</span> <span style="color: #d0d0d0">IDS</span> <span style="color: #d0d0d0">;</span>
+
+<span style="color: #d0d0d0">IDS</span> <span style="color: #d0d0d0">:</span> <span style="color: #d0d0d0">ID</span>
+    <span style="color: #d0d0d0">|</span> <span style="color: #d0d0d0">IDS</span> <span style="color: #a61717; background-color: #e3d2d2">‘</span><span style="color: #d0d0d0">.</span><span style="color: #a61717; background-color: #e3d2d2">&#39;</span> <span style="color: #d0d0d0">ID;</span>
+</pre></div>
+</td></tr></table>
+
+<blockquote>
+<p>?</p>
+</blockquote>
+<p>Antlr</p>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #d0d0d0">classDeclaration</span>
+
+<span style="color: #d0d0d0">:</span> <span style="color: #a61717; background-color: #e3d2d2">&#39;</span><span style="color: #d0d0d0">class</span><span style="color: #a61717; background-color: #e3d2d2">&#39;</span> <span style="color: #d0d0d0">ID</span> <span style="color: #d0d0d0">(typeParameters)?</span> <span style="color: #d0d0d0">(</span><span style="color: #a61717; background-color: #e3d2d2">&#39;</span><span style="color: #d0d0d0">extends</span><span style="color: #a61717; background-color: #e3d2d2">&#39;</span> <span style="color: #d0d0d0">type)?</span>
+
+<span style="color: #d0d0d0">(</span><span style="color: #a61717; background-color: #e3d2d2">&#39;</span><span style="color: #d0d0d0">implements</span><span style="color: #a61717; background-color: #e3d2d2">&#39;</span> <span style="color: #d0d0d0">typeList)?</span>
+
+<span style="color: #d0d0d0">classBody</span>
+
+<span style="color: #d0d0d0">;</span>
+</pre></div>
+</td></tr></table>
+
+<p>yacc
+//我们假设yacc支持()吧！  要不得拆分出好多</p>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #d0d0d0">classDeclaration</span> <span style="color: #d0d0d0">:</span> <span style="color: #a61717; background-color: #e3d2d2">&#39;</span><span style="color: #d0d0d0">class</span><span style="color: #a61717; background-color: #e3d2d2">&#39;</span> <span style="color: #d0d0d0">ID</span> 
+            <span style="color: #d0d0d0">(typeParameters</span> <span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">(</span><span style="color: #a61717; background-color: #e3d2d2">&#39;</span><span style="color: #d0d0d0">extends</span><span style="color: #a61717; background-color: #e3d2d2">&#39;</span> <span style="color: #d0d0d0">type)</span> <span style="color: #d0d0d0">(</span><span style="color: #a61717; background-color: #e3d2d2">&#39;</span><span style="color: #d0d0d0">implements</span><span style="color: #a61717; background-color: #e3d2d2">&#39;</span> <span style="color: #d0d0d0">typeList)</span>      <span style="color: #d0d0d0">classBody</span> <span style="color: #d0d0d0">;</span>
+<span style="color: #d0d0d0">|</span> <span style="color: #a61717; background-color: #e3d2d2">&#39;</span><span style="color: #d0d0d0">class</span><span style="color: #a61717; background-color: #e3d2d2">&#39;</span> <span style="color: #d0d0d0">ID</span>                    <span style="color: #d0d0d0">(</span><span style="color: #a61717; background-color: #e3d2d2">&#39;</span><span style="color: #d0d0d0">extends</span><span style="color: #a61717; background-color: #e3d2d2">&#39;</span> <span style="color: #d0d0d0">type)</span>                            <span style="color: #d0d0d0">classBody</span> <span style="color: #d0d0d0">;</span>
+<span style="color: #d0d0d0">|</span> <span style="color: #a61717; background-color: #e3d2d2">&#39;</span><span style="color: #d0d0d0">class</span><span style="color: #a61717; background-color: #e3d2d2">&#39;</span> <span style="color: #d0d0d0">ID</span>    <span style="color: #d0d0d0">(typeParameters</span> <span style="color: #d0d0d0">)</span>                                           <span style="color: #d0d0d0">classBody</span> <span style="color: #d0d0d0">;</span>
+<span style="color: #d0d0d0">|</span> <span style="color: #a61717; background-color: #e3d2d2">&#39;</span><span style="color: #d0d0d0">class</span><span style="color: #a61717; background-color: #e3d2d2">&#39;</span> <span style="color: #d0d0d0">ID</span>                                     <span style="color: #d0d0d0">(</span><span style="color: #a61717; background-color: #e3d2d2">&#39;</span><span style="color: #d0d0d0">implements</span><span style="color: #a61717; background-color: #e3d2d2">&#39;</span> <span style="color: #d0d0d0">typeList)</span>    <span style="color: #d0d0d0">classBody</span> <span style="color: #d0d0d0">;</span>
+<span style="color: #d0d0d0">|</span> <span style="color: #a61717; background-color: #e3d2d2">&#39;</span><span style="color: #d0d0d0">class</span><span style="color: #a61717; background-color: #e3d2d2">&#39;</span> <span style="color: #d0d0d0">ID</span> <span style="color: #d0d0d0">(typeParameters</span> <span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">(</span><span style="color: #a61717; background-color: #e3d2d2">&#39;</span><span style="color: #d0d0d0">extends</span><span style="color: #a61717; background-color: #e3d2d2">&#39;</span> <span style="color: #d0d0d0">type)</span>                              <span style="color: #d0d0d0">classBody</span> <span style="color: #d0d0d0">;</span>
+<span style="color: #d0d0d0">|</span> <span style="color: #a61717; background-color: #e3d2d2">&#39;</span><span style="color: #d0d0d0">class</span><span style="color: #a61717; background-color: #e3d2d2">&#39;</span> <span style="color: #d0d0d0">ID</span>                    <span style="color: #d0d0d0">(</span><span style="color: #a61717; background-color: #e3d2d2">&#39;</span><span style="color: #d0d0d0">extends</span><span style="color: #a61717; background-color: #e3d2d2">&#39;</span> <span style="color: #d0d0d0">type)</span> <span style="color: #d0d0d0">(</span><span style="color: #a61717; background-color: #e3d2d2">&#39;</span><span style="color: #d0d0d0">implements</span><span style="color: #a61717; background-color: #e3d2d2">&#39;</span> <span style="color: #d0d0d0">typeList)</span>    <span style="color: #d0d0d0">classBody</span> <span style="color: #d0d0d0">;</span>
+<span style="color: #d0d0d0">|</span> <span style="color: #a61717; background-color: #e3d2d2">&#39;</span><span style="color: #d0d0d0">class</span><span style="color: #a61717; background-color: #e3d2d2">&#39;</span> <span style="color: #d0d0d0">ID</span> <span style="color: #d0d0d0">(typeParameters</span> <span style="color: #d0d0d0">)</span>                   <span style="color: #d0d0d0">(</span><span style="color: #a61717; background-color: #e3d2d2">&#39;</span><span style="color: #d0d0d0">implements</span><span style="color: #a61717; background-color: #e3d2d2">&#39;</span> <span style="color: #d0d0d0">typeList)</span>    <span style="color: #d0d0d0">classBody</span> <span style="color: #d0d0d0">;</span>
+</pre></div>
+</td></tr></table>
+
+<p>这样来说Antlr大量的节约了思考模式和代码的长度</p>
+
+<a href="../">回到首页</a>
+</body>
+</html>
+<!-- css from http://kevinburke.bitbucket.org/markdowncss/ -->
+
