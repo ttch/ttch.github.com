@@ -32,10 +32,11 @@ Antlr
 
 yacc
 
-	annotationName : IDS ;
+	annotationName : ID ( IDS ) ;
 	
 	IDS : ID
-		| IDS ‘.' ID;
+		| IDS ‘.' ID
+		| empty
 
 
 > ?
