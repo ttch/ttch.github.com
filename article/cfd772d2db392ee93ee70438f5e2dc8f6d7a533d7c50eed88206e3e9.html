@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>关于breed的第一篇文章</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="../static/css/render.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>关于breed的第一篇文章<h1>
+<h2>breed是什么？</h2>
+<p>breed的起源地址是：<a href="http://github.com/ttch/breed">link</a></p>
+<p>当我们经历了很多这样的代码</p>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #d0d0d0">plc.name.text</span> <span style="color: #d0d0d0">=</span> <span style="color: #ed9d13">&quot;hello&quot;</span><span style="color: #d0d0d0">;</span>
+<span style="color: #d0d0d0">plc.age.number</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">15</span><span style="color: #d0d0d0">;</span>
+<span style="color: #a61717; background-color: #e3d2d2">……</span>
+<span style="color: #a61717; background-color: #e3d2d2">…</span><span style="color: #d0d0d0">..</span>
+<span style="color: #a61717; background-color: #e3d2d2">…</span><span style="color: #d0d0d0">.</span>
+<span style="color: #d0d0d0">plc.xx.xxx</span> <span style="color: #d0d0d0">=</span> <span style="color: #ed9d13">&quot;hellx&quot;</span><span style="color: #d0d0d0">;</span>
+</pre></div>
+</td></tr></table>
+
+<p>是不是想让他们边的更简洁一些？更容易编写一些呢？</p>
+<p>一般的做法是这样的。</p>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #a61717; background-color: #e3d2d2">@（</span><span style="color: #d0d0d0">type</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">plc</span><span style="color: #a61717; background-color: #e3d2d2">）</span>
+<span style="color: #d0d0d0">public</span> <span style="color: #d0d0d0">recv(</span> <span style="color: #d0d0d0">plc</span> <span style="color: #d0d0d0">aplc)</span>
+<span style="color: #d0d0d0">{</span>
+<span style="color: #d0d0d0">}</span>
+
+<span style="color: #a61717; background-color: #e3d2d2">这是</span><span style="color: #d0d0d0">spring</span><span style="color: #a61717; background-color: #e3d2d2">和</span><span style="color: #d0d0d0">django</span><span style="color: #a61717; background-color: #e3d2d2">等框架的做法。</span>
+</pre></div>
+</td></tr></table>
+
+<p>那么框架帮我们实现了动态的匹配。但你还是需要对plc里的值进行取值。有没有足够模糊的方法来省掉你的代码呢？</p>
+<p>也就是说框架帮我们实现了进出流的问题，但具体的内部流的运作iiucheng付值你还需要自己去写大量的x = y类的表达式来实现。</p>
+<p>breed会怎么样做呢？</p>
+<table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #d0d0d0">sets</span> <span style="color: #d0d0d0">a</span> <span style="color: #d0d0d0">[</span> <span style="color: #d0d0d0">plc</span> <span style="color: #d0d0d0">]</span>
+
+<span style="color: #d0d0d0">set</span> <span style="color: #d0d0d0">plc.string</span> <span style="color: #d0d0d0">=</span> <span style="color: #ed9d13">&quot;hello&quot;</span><span style="color: #d0d0d0">;</span> <span style="color: #999999; font-style: italic">//设置结构里的所有string类型的字段都为这个值。</span>
+
+<span style="color: #d0d0d0">^set</span> <span style="color: #d0d0d0">plc.string</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">2</span><span style="color: #d0d0d0">;</span> <span style="color: #999999; font-style: italic">//plc.string里除了string类型都设置一个值2.</span>
+
+<span style="color: #d0d0d0">set</span> <span style="color: #d0d0d0">plc</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">sys.template.xml.load(y,</span><span style="color: #ed9d13">&quot;plc&quot;</span><span style="color: #d0d0d0">,</span><span style="color: #ed9d13">&quot;setplc&quot;</span><span style="color: #d0d0d0">)</span> <span style="color: #999999; font-style: italic">//这里，你可以通过y来定义每一个plc的字段对应哪些值或者哪些结构的值。当然这个load函数后面跟的两个参数是xml的节点名，意思是plc节点下的setplc。</span>
+</pre></div>
+</td></tr></table>
+
+<p>以上方式都可以帮你生成第一个例子里那样的代码。那么多数人会有疑问，这样做感觉上比原来的还麻烦。</p>
+<p>我的回答很简单，breed的概念是你刚开始开发会很慢，一旦一个系统的设计成型了，二次开发和维护会很快！。</p>
+<p>当然我另一个回答是，我不会完全让你全部开发，我会尽力提供一个工具能够把一些语言的这种重复代码转换成breed语言，并为你生成部分模板的样式。当然暂时考虑的只有两种语言，一个是java，一个是c。当然我在想有生之年能不能完成java的转换的问题了！哈。所以我会提供一个例子吧！尽量能够保证大家轻松的转换主要的样式例子，然后就转手再开发其他的去。。剩下的就靠大家来搞定了。</p>
+<p>以后我尽量保证一个星期更新一篇关于breed的文章。</p>
+
+<a href="../">回到首页</a>
+</body>
+</html>
+<!-- css from http://kevinburke.bitbucket.org/markdowncss/ -->
+
