@@ -25,17 +25,17 @@ breed的起源地址是：[link](http://github.com/ttch/breed)
 
 那么框架帮我们实现了动态的匹配。但你还是需要对plc里的值进行取值。有没有足够模糊的方法来省掉你的代码呢？
 
-也就是说框架帮我们实现了进出流的问题，但具体的内部流的运作iiucheng付值你还需要自己去写大量的x = y类的表达式来实现。
+也就是说框架帮我们实现了进出流的问题，但具体的内部流的运作赋值你还需要自己去写大量的x = y类的表达式来实现。
 
 breed会怎么样做呢？
 
 	sets a [ plc ]
 	
-	set plc.string = "hello"; //设置结构里的所有string类型的字段都为这个值。
+	set [ plc.string ] a = "hello"; //设置结构里的所有string类型的字段都为这个值。
 	
-	^set plc.string = 2; //plc.string里除了string类型都设置一个值2.
+	set ^[ plc.string ] a = 2 ; //plc.string里除了string类型都设置一个值2.
 	
-	set plc = sys.template.xml.load(y,"plc","setplc") //这里，你可以通过y来定义每一个plc的字段对应哪些值或者哪些结构的值。当然这个load函数后面跟的两个参数是xml的节点名，意思是plc节点下的setplc。
+	set [ plc ] a = sys.template.xml.load(y,"plc","setplc") //这里，你可以通过y来定义每一个plc的字段对应哪些值或者哪些结构的值。当然这个load函数后面跟的两个参数是xml的节点名，意思是plc节点下的setplc。
 
 以上方式都可以帮你生成第一个例子里那样的代码。那么多数人会有疑问，这样做感觉上比原来的还麻烦。
 

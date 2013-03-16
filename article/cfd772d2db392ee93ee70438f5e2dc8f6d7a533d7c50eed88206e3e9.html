@@ -41,7 +41,7 @@
 </td></tr></table>
 
 <p>那么框架帮我们实现了动态的匹配。但你还是需要对plc里的值进行取值。有没有足够模糊的方法来省掉你的代码呢？</p>
-<p>也就是说框架帮我们实现了进出流的问题，但具体的内部流的运作iiucheng付值你还需要自己去写大量的x = y类的表达式来实现。</p>
+<p>也就是说框架帮我们实现了进出流的问题，但具体的内部流的运作赋值你还需要自己去写大量的x = y类的表达式来实现。</p>
 <p>breed会怎么样做呢？</p>
 <table class="colorfultable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
 2
@@ -51,11 +51,11 @@
 6
 7</pre></div></td><td class="code"><div class="colorful" style="background: #202020"><pre style="line-height: 125%"><span style="color: #d0d0d0">sets</span> <span style="color: #d0d0d0">a</span> <span style="color: #d0d0d0">[</span> <span style="color: #d0d0d0">plc</span> <span style="color: #d0d0d0">]</span>
 
-<span style="color: #d0d0d0">set</span> <span style="color: #d0d0d0">plc.string</span> <span style="color: #d0d0d0">=</span> <span style="color: #ed9d13">&quot;hello&quot;</span><span style="color: #d0d0d0">;</span> <span style="color: #999999; font-style: italic">//设置结构里的所有string类型的字段都为这个值。</span>
+<span style="color: #d0d0d0">set</span> <span style="color: #d0d0d0">[</span> <span style="color: #d0d0d0">plc.string</span> <span style="color: #d0d0d0">]</span> <span style="color: #d0d0d0">a</span> <span style="color: #d0d0d0">=</span> <span style="color: #ed9d13">&quot;hello&quot;</span><span style="color: #d0d0d0">;</span> <span style="color: #999999; font-style: italic">//设置结构里的所有string类型的字段都为这个值。</span>
 
-<span style="color: #d0d0d0">^set</span> <span style="color: #d0d0d0">plc.string</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">2</span><span style="color: #d0d0d0">;</span> <span style="color: #999999; font-style: italic">//plc.string里除了string类型都设置一个值2.</span>
+<span style="color: #d0d0d0">set</span> <span style="color: #d0d0d0">^[</span> <span style="color: #d0d0d0">plc.string</span> <span style="color: #d0d0d0">]</span> <span style="color: #d0d0d0">a</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">2</span> <span style="color: #d0d0d0">;</span> <span style="color: #999999; font-style: italic">//plc.string里除了string类型都设置一个值2.</span>
 
-<span style="color: #d0d0d0">set</span> <span style="color: #d0d0d0">plc</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">sys.template.xml.load(y,</span><span style="color: #ed9d13">&quot;plc&quot;</span><span style="color: #d0d0d0">,</span><span style="color: #ed9d13">&quot;setplc&quot;</span><span style="color: #d0d0d0">)</span> <span style="color: #999999; font-style: italic">//这里，你可以通过y来定义每一个plc的字段对应哪些值或者哪些结构的值。当然这个load函数后面跟的两个参数是xml的节点名，意思是plc节点下的setplc。</span>
+<span style="color: #d0d0d0">set</span> <span style="color: #d0d0d0">[</span> <span style="color: #d0d0d0">plc</span> <span style="color: #d0d0d0">]</span> <span style="color: #d0d0d0">a</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">sys.template.xml.load(y,</span><span style="color: #ed9d13">&quot;plc&quot;</span><span style="color: #d0d0d0">,</span><span style="color: #ed9d13">&quot;setplc&quot;</span><span style="color: #d0d0d0">)</span> <span style="color: #999999; font-style: italic">//这里，你可以通过y来定义每一个plc的字段对应哪些值或者哪些结构的值。当然这个load函数后面跟的两个参数是xml的节点名，意思是plc节点下的setplc。</span>
 </pre></div>
 </td></tr></table>
 
