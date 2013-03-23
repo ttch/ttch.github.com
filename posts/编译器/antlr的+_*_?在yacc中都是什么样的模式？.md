@@ -10,7 +10,7 @@
 -  ( * ) 可能出现，也可能不出现。
 -  ( ? ) 最多出现一次，也可能不出现。
 
-就上面的三种种情况 看看yacc中怎么描述。
+就上面的三种种情况 看看ply中的yacc中怎么描述。
 
 > +
 
@@ -65,4 +65,4 @@ yacc
 	| 'class' ID 					('extends' type) ('implements' typeList)	classBody ;
 	| 'class' ID (typeParameters )					 ('implements' typeList)	classBody ;
 	
-这样来说Antlr大量的节约了思考模式和代码的长度
+antlr使用正则的3种模式大量的节约了思考周期和代码的长度
